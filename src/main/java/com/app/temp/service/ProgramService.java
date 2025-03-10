@@ -1,9 +1,6 @@
 package com.app.temp.service;
 
-import com.app.temp.domain.dto.MainProgramInfoDTO;
-import com.app.temp.domain.dto.MainProgramListDTO;
-import com.app.temp.domain.dto.MemberInfoAdminDTO;
-import com.app.temp.domain.dto.ProgramListDTO;
+import com.app.temp.domain.dto.*;
 import com.app.temp.domain.vo.ScrapVO;
 import com.app.temp.repository.MemberDAO;
 import com.app.temp.repository.ProgramDAO;
@@ -31,12 +28,13 @@ public class ProgramService {
     }
 //  프로그램 목록 조회(메인페이지) + 스크랩 버튼 초기 상태 구분
 //  스크랩 버튼의 aria-pressed 속성을 true or false 로 저장해서 화면에서 보여줌.
-    public ArrayList<MainProgramListDTO> getAllMain(){
-        Long memberId = 1L;
+    public ArrayList<MainProgramListDTO> getAllMain(String memberEmail){
         ArrayList<MainProgramListDTO> mainProgramListDTOS = programDAO.findAllMain();
-        MemberInfoAdminDTO member = memberDAO.findMemberInfoAdmin(memberId); // 현재 테스트용 아이디가 들어가있음.
+        Optional<MemberDTO> member = memberDAO.findByMemberEmail(memberEmail); // 현재 테스트용 아이디가 들어가있음.
+        Long memberID = (Long) member.get().getId();
+        log.info("memberEmail: " + memberEmail);
         ScrapVO scrapVO = new ScrapVO();
-        scrapVO.setMemberId(member.getId());
+        scrapVO.setMemberId(memberID);
         mainProgramListDTOS.forEach(mainProgramListDTO -> {
             scrapVO.setProgramId(mainProgramListDTO.getId());
             scrapDAO.findOne(scrapVO).ifPresentOrElse(scrap -> mainProgramListDTO.setScrapStatus("true"), ()-> mainProgramListDTO.setScrapStatus("false"));

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+// 개인 회원 정보(관리자 페이지)
 public class MemberInfoAdminDTO {
     @EqualsAndHashCode.Include
     private Long id;

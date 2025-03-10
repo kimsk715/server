@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+// 기업문의 상세 정보(관리자 페이지)
 public class CompanyInquiryInfoDTO {
     @EqualsAndHashCode.Include
     private Long id;

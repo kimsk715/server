@@ -12,11 +12,16 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+// /program/detail/{programId} 에서 띄울 프로그램 정보.
 public class MainProgramInfoDTO {
     @EqualsAndHashCode.Include
     private Long id; // 프로그램 번호
     private String programName;
     private Long categoryCid;
+    private String categoryName;
+    private int duration;
+    private int year;
+    private int month;
     private String categoryCname;
     private String programEndDate;
     private String programDetail;
@@ -25,7 +30,8 @@ public class MainProgramInfoDTO {
     private String companyName;
     private String companyIntroduce;
     private String companyEstablishment;
-    private String companyAddress;
+    private String companyMainAddress;
+    private String companySubAddress;
     private String companyLogoPath; // 로고 경로
     private String companyWelfare;
     private String companyCulture;

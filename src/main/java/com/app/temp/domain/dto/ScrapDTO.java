@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+// 스크랩(
 public class ScrapDTO {
     @EqualsAndHashCode.Include
     private Long id;

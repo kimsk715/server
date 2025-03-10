@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+//
 public class CompanyProgramDTO {
     @EqualsAndHashCode.Include
     private Long id;

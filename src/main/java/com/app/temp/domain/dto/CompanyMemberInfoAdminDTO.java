@@ -12,12 +12,15 @@ import java.util.ArrayList;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+// 기업 회원 상세 정보(관리자 페이지 출력용)
 public class CompanyMemberInfoAdminDTO {
     @EqualsAndHashCode.Include
     private Long id;
     private String companyAddress;
     private Long companyId;
     private int companyBusinessNumber;
+    private int year; // ~~~~년 출력용
+    private int month; // ~~월 출력용
     private String companyEstablishment;
     private int companyEmployee; // 사원수
     private String companyLogoPath; // 로고 경로

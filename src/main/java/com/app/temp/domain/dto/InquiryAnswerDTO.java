@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 
+// 일반 회원 문의 답변
 public class InquiryAnswerDTO {
     @EqualsAndHashCode.Include
     private Long id;

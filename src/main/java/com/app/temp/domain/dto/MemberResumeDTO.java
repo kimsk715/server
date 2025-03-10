@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+// 개인 회원 이력서(관리자 - 개인회원 상세보기)
 public class MemberResumeDTO {
     @EqualsAndHashCode.Include
     private Long memberId;

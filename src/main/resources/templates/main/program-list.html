@@ -205,8 +205,9 @@
                 <!-- 메인 컨텐츠 목록 시작 -->
                 <div class="mainContentsWrapper">
                     <div class="mainContentsList">
-                        <div class="mainContentCard" th:each="mainProgramListDTO : ${mainProgramListDTOS}">
-<!--                            <a th:href="|/program/detail/${mainProgramListDTO.id}|">-->
+
+                            <div class="mainContentCard" th:each="mainProgramListDTO : ${mainProgramListDTOS}">
+                                <a th:href="|/program/detail/${mainProgramListDTO.id}|">
                                 <div class="imgBox">
                                     <img
                                         th:src="${mainProgramListDTO.programThumbnailPath}"
@@ -255,8 +256,9 @@
                                         <li>경력 5~15년</li>
                                     </ul>
                                 </div>
-<!--                            </a>-->
-                        </div>
+                                </a>
+                            </div>
+
                         <div class="mainContentCard">
                             <a href="">
                                 <div class="imgBox">

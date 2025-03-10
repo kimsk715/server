@@ -32,6 +32,10 @@
         FROM TBL_MEMBER
         WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
+    <select id="selectByMemberId" resultType="memberDTO">
+        SELECT ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL,  MEMBER_PROFILE_PATH, MEMBER_CLASS, MEMBER_POINT, MEMBER_STATUS, CREATED_DATE, UPDATED_DATE
+        FROM TBL_MEMBER WHERE ID = #{id}
+    </select>
     <select id="selectAllAdmin" resultType="memberAdminListDTO">
         SELECT ID, MEMBER_NAME, MEMBER_EMAIL, MEMBER_REGISTER_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS
         FROM TBL_MEMBER

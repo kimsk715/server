@@ -25,7 +25,10 @@ public class MemberService {
         return memberDAO.findByMemberEmail(memberEmail);
     }
 
-
+//  아이디로 회원 조회
+    public Optional<MemberDTO> getMemberById(MemberDTO memberDTO){
+        return memberDAO.findByMemberId(memberDTO.getId());
+    }
     // 로그인하면 회원 최근 로그인 시간 갱신
     public void updateMemberRecentLogin(Long id){
         memberDAO.updateMemberRecentLogin(id);

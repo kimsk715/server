@@ -24,6 +24,10 @@ public class MemberDAO {
         return memberMapper.selectByMemberEmail(memberEmail);
     }
 
+    public Optional<MemberDTO> findByMemberId(Long id){
+        return memberMapper.selectByMemberId(id);
+    }
+
 //    개인회원 기업으로 전환
     public void setMemberClass(Long id){
         memberMapper.updateMemberClass(id);

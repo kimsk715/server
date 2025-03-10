@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
+// 신고 목록(관리자)
 public class ReportListDTO {
     @EqualsAndHashCode.Include
     private Long id;
