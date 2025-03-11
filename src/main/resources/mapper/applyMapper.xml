@@ -17,16 +17,45 @@
     </select>
 
     <select id="selectCompanyProgramDTOByCompanyId" resultType="companyProgramDTO">
-         SELECT ID, PROGRAM_NAME, CREATED_DATE, PROGRAM_END_DATE, PROGRAM_EXPIRED
+         SELECT ID, PROGRAM_NAME, CREATED_DATE, (CEIL(TO_DATE(PROGRAM_END_DATE)-SYSDATE)) PROGRAM_END_DATE, PROGRAM_EXPIRED
          FROM TBL_PROGRAM
          WHERE COMPANY_ID = #{companyId}
     </select>
 
+    <select id="countByCompanyId" resultType="_int">
+        SELECT COUNT(*)
+        FROM TBL_PROGRAM
+        WHERE COMPANY_ID = #{companyId}
+    </select>
     <select id="selectAll" resultType="programListDTO">
-        SELECT P.ID, C.COMPANY_NAME, P.PROGRAM_NAME, P.CREATED_DATE, P.PROGRAM_END_DATE, P.PROGRAM_STATUS
+        SELECT ID, COMPANY_NAME, PROGRAM_NAME, CREATED_DATE, PROGRAM_END_DATE, PROGRAM_STATUS
+               FROM
+        (
+        SELECT ID, ROWNUM R, COMPANY_NAME, PROGRAM_NAME, CREATED_DATE, PROGRAM_END_DATE, PROGRAM_STATUS
+        FROM
+        (
+        SELECT P.ID, COMPANY_NAME, PROGRAM_NAME, P.CREATED_DATE, PROGRAM_END_DATE, P.PROGRAM_STATUS
         FROM TBL_PROGRAM P
         JOIN TBL_COMPANY C
         ON P.COMPANY_ID = C.ID
+        <if test="status != null">
+            AND P.PROGRAM_STATUS = #{status}
+        </if>
+        <if test="keyword != null">
+            AND PROGRAM_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="date != null">
+            AND CEIL(TO_DATE(PROGRAM_END_DATE)-SYSDATE) <![CDATA[ <= #{date} ]]>
+        </if>
+        ORDER BY P.ID DESC
+        )
+        <![CDATA[
+        WHERE ROWNUM <= ${endRow}
+        ]]>
+        )
+        <![CDATA[
+        WHERE R >= ${startRow}
+        ]]>
     </select>
 
     <select id="selectProgramInfoDTOById" resultType="ProgramInfoDTO">
@@ -67,7 +96,7 @@
         SELECT P.ID, P.PROGRAM_NAME, P.CREATED_DATE, TO_CHAR(P.PROGRAM_END_DATE, 'YYYY-MM') PROGRAM_END_DATE, CC.CATEGORY_C_NAME,
                P.PROGRAM_DETAIL, P.PROGRAM_PRICE, P.PROGRAM_BENEFIT, TO_CHAR(C.COMPANY_ESTABLISHMENT, 'YYYY') YEAR, TO_CHAR(C.COMPANY_ESTABLISHMENT, 'MM') MONTH,
                CEIL((SYSDATE-TO_DATE(COMPANY_ESTABLISHMENT))/365) DURATION, C.COMPANY_NAME, P.CATEGORY_C_ID, C.COMPANY_ESTABLISHMENT, C.COMPANY_MAIN_ADDRESS, C.COMPANY_SUB_ADDRESS,
-               C.COMPANY_LOGO_PATH, C.COMPANY_WELFARE, C.COMPANY_CULTURE, C.COMPANY_INTRODUCE
+               C.COMPANY_LOGO_PATH, C.COMPANY_WELFARE, C.COMPANY_CULTURE, C.COMPANY_INTRODUCE, C.COMPANY_URL
         FROM TBL_PROGRAM P
                  JOIN TBL_COMPANY C
                       ON P.COMPANY_ID = C.ID
@@ -76,5 +105,14 @@
                                         WHERE P.ID = #{id}
     </select>
 
+        <insert id="insert">
+            INSERT INTO TBL_APPLY(ID, MEMBER_ID, PROGRAM_ID, RESUME_ID)
+            VALUES (SEQ_APPLY.NEXTVAL, #{memberId}, #{programId}, #{resumeId})    
+        </insert>
 
+    <select id="countAll" resultType="_int">
+        SELECT COUNT(*)
+        FROM TBL_PROGRAM
+
+    </select>
 </mapper>

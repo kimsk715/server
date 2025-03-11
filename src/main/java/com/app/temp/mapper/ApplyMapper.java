@@ -13,7 +13,7 @@ public interface ApplyMapper {
 
     public ArrayList<CompanyProgramDTO> selectCompanyProgramDTOByCompanyId(Long companyId);
 
-    public ArrayList<ProgramListDTO> selectAll();
+    public ArrayList<ProgramListDTO> selectAll(Pagination pagination);
 
     public Optional<ProgramInfoDTO> selectProgramInfoDTOById(Long Id);
 
@@ -24,4 +24,12 @@ public interface ApplyMapper {
     public ArrayList<MainProgramListDTO> selectAllByCategoryCId(Long categoryCId);
 
     public Optional<MainProgramInfoDTO> selectMainProgramInfoDTOById(Long Id);
+
+    public void insert(ApplyDTO applyDTO);
+
+    public int countByCompanyId(Long companyId);
+
+    public int countAll(Pagination pagination);
+
+
 }

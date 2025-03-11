@@ -21,7 +21,7 @@ copyButton.addEventListener("click", () => {
 // 기업/서비스 소개 더보기 버튼 누르면 정보 전체출력
 const moreInfoBtn = document.querySelector(".companyDetailButton");
 const moreInfoText = document.querySelector(".companyDetailText");
-const textGradient = document.querySelector(".compnayDetailHide");
+const textGradient = document.querySelector(".companyDetailHide");
 const expandIcon = moreInfoBtn.querySelector(".expandIcon"); // 펼치기 아이콘
 const collapseIcon = moreInfoBtn.querySelector(".collapseIcon"); // 접기 아이콘
 const buttonText = moreInfoBtn.querySelector(".buttonText"); // 버튼 내 텍스트 span
@@ -347,3 +347,46 @@ document.addEventListener("DOMContentLoaded", function () {
         expandBtn.style.display = "inline-flex";
     });
 });
+
+const submitButton = document.querySelector(".submitButton")
+const applyForm = document.querySelector("article.applyForm")
+const resumeContent = document.querySelectorAll("li.resumeContent")
+applyForm.addEventListener('click', (e)=>{
+    resumeContent.forEach((content) => {
+        if(content.contains(e.target)){
+            const button = content.querySelector("input")
+
+            if(button.classList[0] === "true"){
+                submitButton.removeAttribute("disabled");
+            }
+            else{
+                submitButton.setAttribute("disabled","true");
+            }
+
+        }
+    })
+
+
+})
+
+submitButton.addEventListener('click',(e) => {
+    e.preventDefault();
+    sendData();
+})
+
+function sendData() {
+    fetch('/program/detail/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            memberId: document.getElementById("memberIdValue").value,
+            programId: document.getElementById("programIdValue").value,
+            resumeId: document.querySelector("input[type=radio]:checked").value
+        })
+    })
+        .then(response => response.json())
+        .then(data => window.location.href = "/program/list")
+        .catch(error => console.error('Error:', error));
+}

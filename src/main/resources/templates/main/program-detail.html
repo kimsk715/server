@@ -14,12 +14,12 @@
             type="image/x-icon"
         />
     </head>
-    <body>
+    <body th:object="${programInfo}">
         <!-- 헤더 시작 -->
         <!-- // 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
-            <div class="mainWrapper" th:object="${programInfo}">
+            <div class="mainWrapper" >
                 <!-- 메인 정보 시작 -->
                 <section class="mainContent">
                     <div class="contentTitle">
@@ -52,66 +52,14 @@
                         <dl class="positionDetail">
                             <dt class="detailTitle">주요업무</dt>
                             <dd>
-                                <pre>
-                                    • 레진 코믹스 및 글로벌 웹툰 플랫폼 Backend 서비스 개발
-                                    • 개발 및 운영상 발생하는 이슈 개선
-                                    • 기 개발된 서비스 고도화 및 효율적인 서비스 제공을 위한 점진적인 개선</pre
-                                >
+                                <pre th:text="*{programDetail}">
+                                   </pre>
                             </dd>
                         </dl>
                         <dl class="positionDetail">
-                            <dt class="detailTitle">자격요건</dt>
+                            <dt class="detailTitle" >복지 및 혜택</dt>
                             <dd>
-                                <pre>
-                                    • Java 및 Kotlin에 대한 이해도가 있으신 분
-                                    • 웹 서비스에 대한 이해도가 높으며, REST API 기반의 설계 및 개발이 가능하신 분
-                                    • 관계형 데이터베이스 기반의 개발 경험 및 SQL 작성에 어려움이 없으신 분
-                                    • 코드 품질에 대한 고민과 노력을 하시는 분
-                                    • 팀원 및 다른 업무의 동료를 존중하며, 유연한 커뮤니케이션이 가능하신 분
-                                    • 문제를 적극적으로 드러내고, 주도적으로 해결하시는 분
-                                    • 문서화 및 기술 공유를 즐기시는 분
-                            </pre
-                                >
-                            </dd>
-                        </dl>
-                        <dl class="positionDetail">
-                            <dt class="detailTitle">우대사항</dt>
-                            <dd>
-                                <pre>
-                                    • Kotlin을 이용해서 Spring Framework 기반의 애플리케이션 개발 경험이 있으신 분
-                                    • 대규모 트래픽이나 대용량 데이터 처리 경험이 있으신 분
-                                    • AWS 환경에서의 서비스 개발 및 운영 경험이 있으신 분
-                                    • Python(Django)을 이용한 서비스 개발 경험이 있으신 분
-                            </pre
-                                >
-                            </dd>
-                        </dl>
-                        <dl class="positionDetail">
-                            <dt class="detailTitle">복지 및 혜택</dt>
-                            <dd>
-                                <pre>
-                                    업무에만 집중할 수 있도록,
-                                    • 최신 사양 업무 장비 지급
-                                    • 시차 출퇴근제 운영 (8시~11시 사이 출근)
-                                    • 개인 법인카드를 이용한 점심 지원 (일 12,000원)
-                                    • 사내 카페 음료 지원
-                                    • 부득이한 야근 시 택시비 지원
-                                    • 무제한 간식 제공
-
-                                    재직자의 건강과 리프레시를 위해,
-                                    • 법적 연차 외 5일의 추가 연차 지급 (중도 입사자 일할 계산)
-                                    • 주택 자금 대출 지원
-                                    • 경조사 지원
-                                    • 명절 상여/선물 지급
-                                    • 사고나 질병에 대비한 단체 상해 보험 제공 (배우자, 자녀 포함)
-                                    • 근속 3년 단위 보너스 & 특별 휴가 제공
-                                    • 휴식을 위한 그룹사 연수원 및 기업 연계 휴양소 지원
-
-                                    재직자의 성장을 위해,
-                                    • 자기 개발을 위한 직무 도서 지원 (무제한)
-                                    • 직무 교육 지원 (무제한)
-                            </pre
-                                >
+                                <pre th:text="*{companyWelfare}"></pre>
                             </dd>
                         </dl>
                         <dl class="positionDetail">
@@ -155,7 +103,7 @@
                                     </li>
                                     <div class="btns">
                                         <div class="address">
-                                            <a href="" class="addressbtn">
+                                            <a th:href="|https://m.map.naver.com/search2/search.nhn?query=*{companyMainAddress}#/map|" class="addressbtn">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="24"
@@ -208,7 +156,7 @@
                     </div>
                     <div class="companyInfo">
                         <h2 class="title">기업/서비스 소개</h2>
-                        <a href="" class="link">
+                        <a th:href="|/program/company-info/*{id}|" class="link">
                             기업상세 정보로 이동
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -276,33 +224,13 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div class="imageBanner scroll-vertical">
-                                <div>
+                            <div class="imageBanner scroll-vertical" >
+                                <div th:each="image : *{companyImageList}">
                                     <img
-                                        src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112656155_1080_790.webp"
+                                        th:src="${image.companyImagePath}"
                                         height="441"
                                         width="630"
-                                    />
-                                </div>
-                                <div>
-                                    <img
-                                        src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112658487_1080_790.webp"
-                                        height="441"
-                                        width="630"
-                                    />
-                                </div>
-                                <div>
-                                    <img
-                                        src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112653349_1080_790.webp"
-                                        height="441"
-                                        width="630"
-                                    />
-                                </div>
-                                <div>
-                                    <img
-                                        src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232707112703284_1080_790.webp"
-                                        height="441"
-                                        width="630"
+                                        loading="lazy"
                                     />
                                 </div>
                             </div>
@@ -311,17 +239,11 @@
                                 <!--  -->
                                 /
                                 <!--  -->
-                                4
+                                <span th:text="*{imageCount}"></span>
                             </div>
                         </div>
                         <div class="companyDetail">
-                            <pre class="companyDetailText">
-                                We Create Fun in The World
-                                즐거움을 만들고, 세상을 연결합니다.
-
-
-                                재미로 세상을 연결하는 레진엔터테인먼트는, 웹툰 및 웹소설 플랫폼 ‘봄툰’ ‘레진’ ‘델리툰’ 뿐만 아니라 오리지널 웹툰 제작 스튜디오를 운영하고 있습니다.
-                                나아가 영상콘텐츠 사업까지 영위하는 글로벌 종합 콘텐츠 기업에 합류하세요!
+                            <pre class="companyDetailText" th:text="*{companyIntroduce}">
                             </pre>
                             <button
                                 aria-expanded="false"
@@ -403,29 +325,32 @@
                         <div class="contents">
                             <a href="" class="company">
                                 <img
-                                    src="https://cdn.jumpit.co.kr/images/hmlee_4/20235714085713402_579_579.png"
+                                    th:src="*{companyLogoPath}"
                                     height="70"
                                     width="70"
                                 />
                                 <div class="name">
                                     <h2 th:text="*{companyName}"></h2>
-                                    <span
+                                    <a th:href="|/program/company-info/*{id}|">
+                                        <span
                                         >기업정보 보기
                                         <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="12"
-                                            height="12"
-                                            fill="none"
-                                            viewBox="0 0 12 12"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="12"
+                                                height="12"
+                                                fill="none"
+                                                viewBox="0 0 12 12"
                                         >
                                             <path
-                                                fill="#222"
-                                                fill-rule="evenodd"
-                                                d="M4.146 1.896a.5.5 0 0 1 .708 0l3.75 3.75a.5.5 0 0 1 0 .708l-3.75 3.75a.5.5 0 0 1-.708-.708L7.543 6 4.146 2.604a.5.5 0 0 1 0-.708Z"
-                                                clip-rule="evenodd"
+                                                    fill="#222"
+                                                    fill-rule="evenodd"
+                                                    d="M4.146 1.896a.5.5 0 0 1 .708 0l3.75 3.75a.5.5 0 0 1 0 .708l-3.75 3.75a.5.5 0 0 1-.708-.708L7.543 6 4.146 2.604a.5.5 0 0 1 0-.708Z"
+                                                    clip-rule="evenodd"
                                             ></path>
                                         </svg>
                                     </span>
+                                    </a>
+
                                 </div>
                             </a>
                             <dl class="details">
@@ -433,7 +358,12 @@
                                     <dt>업력</dt>
                                     <dd>
                                         <strong th:text="|*{duration}년차 (*{year}년 *{month}월 설립)|"></strong>
-
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt>홈페이지</dt>
+                                    <dd>
+                                        <a class="companyUrl" th:href="*{companyUrl}" th:text="*{companyUrl}"></a>
                                     </dd>
                                 </div>
                             </dl>
@@ -966,7 +896,7 @@
                         </svg>
                     </button>
                 </header>
-                <form novalidate>
+                <form novalidate method="POST" action="/program/detail/submit">
                     <article class="applyForm">
                         <main class="formMain horizonalScroll">
                             <!-- 이력서에 정보입력이 안 되면 뜨는 창 시작 -->
@@ -981,21 +911,19 @@
                                 </a>
                             </div> -->
                             <!-- // 이력서에 정보입력이 안 되면 뜨는 창 끝 -->
-                            <div class="formWrapper">
+                            <div class="formWrapper" >
                                 <section class="formElement first">
-                                    <h1>레진코믹스 백엔드 개발자</h1>
-                                    <p>레진엔터테인먼트</p>
+                                    <h1 th:text="*{programName}"></h1>
+                                    <p th:text="*{companyName}"></p>
                                 </section>
                                 <section class="formElement">
                                     <div class="accountTitle">
                                         <h2>통합 계정정보</h2>
                                     </div>
-                                    <ul class="accountInfo">
+                                    <ul class="accountInfo" th:object="${session.member}">
                                         <li>
                                             <span class="title">이름</span>
-                                            <span class="accountContent"
-                                                >홍길동</span
-                                            >
+                                            <span class="accountContent" th:text="*{memberName}"></span>
                                             <a href="">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -1015,8 +943,8 @@
                                         </li>
                                         <li>
                                             <span class="title">이메일</span>
-                                            <span class="accountContent"
-                                                >hong1234@kakao.com</span
+                                            <span class="accountContent" th:text="*{memberEmail}">
+                                                ></span
                                             >
                                             <a href="">
                                                 <svg
@@ -1038,7 +966,7 @@
                                         <li>
                                             <span class="title">연락처</span>
                                             <span class="accountContent"
-                                                >01012345678</span
+                                              th:text="*{memberPhone}"  ></span
                                             >
                                             <a href="">
                                                 <svg
@@ -1060,7 +988,7 @@
                                         <li>
                                             <span class="title">출생년도</span>
                                             <span class="accountContent"
-                                                >1990</span
+                                             th:text="|*{memberBirth}년|" ></span
                                             >
                                             <a href="">
                                                 <svg
@@ -1081,7 +1009,7 @@
                                         </li>
                                     </ul>
                                 </section>
-                                <section class="formElement">
+                                <section class="formElement" th:object="${session.member}" >
                                     <div class="resumeTitle">
                                         <h2>지원 이력서<em class="mustRedDot">
                                                 <span class="blind">필수</span>
@@ -1091,22 +1019,19 @@
                                             <em>1</em>개
                                         </span>
                                     </div>
-                                    <ul class="resumeInfoWrapper">
+                                    <ul class="resumeInfoWrapper" >
                                         <!-- 지원 이력서 1번 시작 -->
-                                        <li class="resumeContent">
+                                        <li class="resumeContent" th:each="resume : *{resumeList}">
                                             <div>
-                                                <input type="radio" name="selectResumeid" value="true">
+                                                <input type="radio" name="selectResumeid" th:class="${resume.resumeRequired}" th:value="${resume.id}">
                                                 <div class="resumeInfo">
-                                                    <h3>홍길동이력서_250101</h3>
-                                                    <ul>
-                                                        <li class="resumeSkill">학력</li>
-                                                        <li class="resumeSkill">프로젝트</li>
-                                                    </ul>
+                                                    <h3 th:text="${resume.resumeTitle}"></h3>
+<!--                                                    <ul>-->
+<!--                                                        <li class="resumeSkill"></li>-->
+<!--                                                        <li class="resumeSkill">프로젝트</li>-->
+<!--                                                    </ul>-->
                                                     <p>
-                                                        <span>
-                                                            2025.01.01
-                                                            등록
-                                                        </span>
+                                                        <span th:text="${resume.createdDate}"></span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -1118,116 +1043,18 @@
                                         </li>
                                         <!-- // 지원 이력서 1번 끝 -->
                                         <!-- 지원 이력서 2번 시작 -->
-                                        <li class="resumeContent">
-                                            <div>
-                                                <input type="radio" name="selectResumeid" value="true">
-                                                <div class="resumeInfo">
-                                                    <h3>홍길동이력서_250101</h3>
-                                                    <ul>
-                                                        <li class="resumeSkill">학력</li>
-                                                        <li class="resumeSkill">프로젝트</li>
-                                                    </ul>
-                                                    <p>
-                                                        <span>
-                                                            2025.01.01
-                                                            등록
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="resumeFixBtn">
-                                                <a href="" target="_blank">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32"><path fill="#fff" fill-rule="evenodd" d="M22.221 4.667a2.667 2.667 0 0 0-3.77 0l-11.602 11.6c-.5.501-.781 1.18-.781 1.887v3.18A2.667 2.667 0 0 0 8.734 24h3.18c.707 0 1.386-.281 1.886-.781L25.4 11.617a2.667 2.667 0 0 0 0-3.77l-3.18-3.18ZM8.734 18.153l11.602-11.6 3.18 3.179-11.602 11.601h-3.18v-3.18ZM5.334 26a1.333 1.333 0 1 0 0 2.666h21.333a1.333 1.333 0 0 0 0-2.666H5.333Z" clip-rule="evenodd"></path></svg>
-                                                </a>
-                                            </div>
-                                        </li>
+
                                         <!-- // 지원 이력서 2번 끝 -->
                                     </ul>
                                 </section>
-                                <section class="formElement">
-                                    <div class="attachTitle">
-                                        <h2>첨부 파일<em class="noFillRedDot">
-                                            <span class="blind">선택</span>
-                                        </em></h2>
-                                    </div>
-                                    <div class="attachInfo">
-                                        <p>같이 제출하실 첨부파일을 선택해주세요!</p>
-                                        <label>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20"><path fill="#00DD6D" fill-rule="evenodd" d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10ZM9 9V5.5h2V9h3.5v2H11v3.5H9V11H5.5V9H9Z" clip-rule="evenodd"></path></svg>
-                                            첨부파일 추가
-                                            <input hidden type="file" id="fileInput">
-                                        </label>
-                                    </div>
-                                    <!-- 첨부한 파일이 없을 때 -->
-                                    <!-- <div class="attachFile">
-                                        <h4>첨부파일이 비어있습니다.</h4>
-                                        <p>
-                                            PDF 첨부를 추천드려요!
-                                            <br>
-                                            점핏은 인사담당자가 PDF로 보기 편하게 만들었어요 :&#41;
-                                        </p>
-                                    </div> -->
-                                    <!-- // 첨부한 파일이 없을 때 -->
-                                    <!-- 첨부한 파일이 있을 때 -->
-                                    <ul class="attachFileOn">
-                                        <!-- 동적으로 생성된 li 요소가 여기에 추가됩니다. -->
-                                        <!-- <li class="attachFileContent">
-                                            <div>
-                                                <input type="checkbox" name="files_311765" value="311765">
-                                                <div class="fileInfo">
-                                                    <h3>sample.pdf</h3>
-                                                    <p>
-                                                        <time datetime="2025-02-07T16:06:16">2025.02.07 등록</time>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="attachFileButton">
-                                                <a href="" class="fileDownloadBtn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20"><path fill="#999" fill-rule="evenodd" d="M10 2.083c.46 0 .833.373.833.834v7.487l2.66-2.66a.833.833 0 1 1 1.179 1.179l-4.125 4.124a.833.833 0 0 1-1.178 0L5.244 8.923a.833.833 0 1 1 1.178-1.179l2.745 2.744V2.917c0-.46.373-.834.833-.834ZM16.25 15c0 .46-.373.833-.833.833H4.583A.833.833 0 0 1 3.75 15v-2.917a.833.833 0 0 0-1.667 0V15a2.5 2.5 0 0 0 2.5 2.5h10.834a2.5 2.5 0 0 0 2.5-2.5v-2.917a.833.833 0 0 0-1.667 0V15Z" clip-rule="evenodd"></path></svg>
-                                                </a>
-                                                <button type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path fill="#C4C4C4" fill-rule="evenodd" d="M4.667 2h6.666v2.667H14V6h-1.333v8H3.333V6H2V4.667h2.667V2ZM6 4.667h4V3.333H6v1.334ZM4.667 6v6.667h6.666V6H4.667ZM6 10.667V8h1.333v2.667H6ZM8.667 8v2.667H10V8H8.667Z" clip-rule="evenodd"></path></svg>
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li class="attachFileContent">
-                                            <div>
-                                                <input type="checkbox" name="files_311765" value="311765">
-                                                <div class="fileInfo">
-                                                    <h3>sample2.pdf</h3>
-                                                    <p>
-                                                        <time datetime="2025-02-07T16:06:16">2025.02.07 등록</time>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="attachFileButton">
-                                                <a href="" class="fileDownloadBtn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20"><path fill="#999" fill-rule="evenodd" d="M10 2.083c.46 0 .833.373.833.834v7.487l2.66-2.66a.833.833 0 1 1 1.179 1.179l-4.125 4.124a.833.833 0 0 1-1.178 0L5.244 8.923a.833.833 0 1 1 1.178-1.179l2.745 2.744V2.917c0-.46.373-.834.833-.834ZM16.25 15c0 .46-.373.833-.833.833H4.583A.833.833 0 0 1 3.75 15v-2.917a.833.833 0 0 0-1.667 0V15a2.5 2.5 0 0 0 2.5 2.5h10.834a2.5 2.5 0 0 0 2.5-2.5v-2.917a.833.833 0 0 0-1.667 0V15Z" clip-rule="evenodd"></path></svg>
-                                                </a>
-                                                <button type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path fill="#C4C4C4" fill-rule="evenodd" d="M4.667 2h6.666v2.667H14V6h-1.333v8H3.333V6H2V4.667h2.667V2ZM6 4.667h4V3.333H6v1.334ZM4.667 6v6.667h6.666V6H4.667ZM6 10.667V8h1.333v2.667H6ZM8.667 8v2.667H10V8H8.667Z" clip-rule="evenodd"></path></svg>
-                                                </button>
-                                            </div>
-                                        </li> -->
-                                    </ul>
-                                    <p>･ PDF 첨부를 추천드려요! 점핏은 인사담당자가 PDF로 보기 편하게 만들었어요 :&#41</p>
-                                    <!-- // 첨부한 파일이 있을 때 -->
-                                </section>
-                                <section class="formElement last">
-                                    <div class="textContent" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-height: 1.5em; ">제출서류는 입사자 확정일로부터 180일까지 지원기업에게 제공됩니다. 제출에 동의할 경우에만 입사지원 해주세요. <br>동의하지 않을 경우 입사지원이 불가능합니다.</div>
-                                    <button type="button" class="botCollapse" style="display: none;">
-                                        접기
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="#000" fill-rule="evenodd" d="M3.793 16.207a1 1 0 0 1 0-1.414l7.5-7.5a1 1 0 0 1 1.414 0l7.5 7.5a1 1 0 0 1-1.414 1.414L12 9.414l-6.793 6.793a1 1 0 0 1-1.414 0Z" clip-rule="evenodd"></path></svg>
-                                    </button>
-                                    <button type="button" class="botExpand">
-                                        자세히 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path fill="#222" fill-rule="evenodd" d="M13.472 5.195c.26.26.26.683 0 .943l-5 5a.667.667 0 0 1-.943 0l-5-5a.667.667 0 1 1 .943-.943L8 9.724l4.529-4.529c.26-.26.682-.26.943 0Z" clip-rule="evenodd"></path></svg></button>
-                                </section>
+
                             </div>
                         </main>
                         <footer class="formSubmitBtn">
-                            <div class="formButton">
-                                <button color="green" class="submitButton" disabled type="submit">지원하기</button>
+                            <div class="formButton" >
+                                <button color="green" class="submitButton" disabled>지원하기</button>
+                                <input type="hidden" id="memberIdValue" th:value="${session.member.id}">
+                                <input type="hidden" id="programIdValue" th:value="${programInfo.id}">
                             </div>
                         </footer>
                     </article>

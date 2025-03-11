@@ -306,6 +306,15 @@ main{
 
 }
 
+.filter-wrap{
+    justify-content: end;
+    text-align : center;
+    position : relative;
+    display: flex;
+    width: 1080px;
+    margin: 0px auto;
+    font-size : 14px;
+}
 .listTitle{
     font-size: 40px;
     line-height: 52px;

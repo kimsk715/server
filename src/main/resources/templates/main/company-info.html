@@ -14,11 +14,11 @@
     <body>
         <!-- 헤더 시작 -->
         <!-- // 헤더 끝 -->
-        <main class="main">
+        <main class="main" th:object="${companyDTO}">
             <div class="mainWrapper">
                 <div class="mainContent">
                     <section class="companyTitle compSection">
-                        <h1>레진엔터테인먼트</h1>
+                        <h1 th:text="*{companyName}"></h1>
                         <ul class="btns">
                             <li>
                                 <button type="button">
@@ -99,8 +99,7 @@
                     </section>
                     <section id="companyInfo" class="companyInfo compSection">
                         <h2>기업 정보</h2>
-                        <div class="more">
-                            채용중인 포지션 2건
+                        <div class="more" th:text="|채용중인 포지션 *{programCount}건|">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="12"
@@ -122,7 +121,7 @@
                                 alt="레진엔터테인먼트 로고"
                                 height="70"
                                 width="70"
-                                src="https://cdn.jumpit.co.kr/images/hmlee_4/20235714085713402_579_579.png"
+                                th:src="*{companyLogoPath}"
                             />
                             <dl>
                                 <div>
@@ -139,11 +138,11 @@
                                     <dt>대표주소</dt>
                                     <dd>
                                         <strong id="copyText"
-                                            >서울 성동구 연무장11길 8</strong
+                                            th:text="*{companyMainAddress}"></strong
                                         >
                                         <div class="compBtns">
                                             <div class="address">
-                                                <a href="" class="addressbtn">
+                                                <a class="addressbtn" th:href="|https://m.map.naver.com/search2/search.nhn?query=*{companyMainAddress}#/map|">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         width="24"
@@ -221,16 +220,10 @@
                     <section
                         id="companyIntroduce"
                         class="companyIntroduce compSection"
-                    >
+                        >
                         <h2>회사 소개</h2>
                         <div class="companyDetail">
-                            <pre class="companyDetailText">
-                                We Create Fun in The World
-                                즐거움을 만들고, 세상을 연결합니다.
-
-                                재미로 세상을 연결하는 레진엔터테인먼트는, 웹툰 및 웹소설 플랫폼 ‘봄툰’ ‘레진’ ‘델리툰’ 뿐만 아니라 오리지널 웹툰 제작 스튜디오를 운영하고 있습니다.
-                                나아가 영상콘텐츠 사업까지 영위하는 글로벌 종합 콘텐츠 기업에 합류하세요!
-                            </pre>
+                            <pre class="companyDetailText" th:text="*{companyIntroduce}"></pre>
                             <button
                                 aria-expanded="false"
                                 class="companyDetailButton"
@@ -271,19 +264,10 @@
                             </button>
                             <div class="gradient compnayDetailHide"></div>
                         </div>
-                        <div class="companyImages">
+                        <div class="companyImages" >
                             <img
-                                src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112656155_1080_790.webp"
-                                height="169"
-                                width="202"
-                            />
-                            <img
-                                src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112658487_1080_790.webp"
-                                height="169"
-                                width="202"
-                            />
-                            <img
-                                src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112653349_1080_790.webp"
+                                    th:each="image, iterStat : *{companyImageList}" th:if="${iterStat.index < 3}"
+                                th:src="${image.companyImagePath}"
                                 height="169"
                                 width="202"
                             />
@@ -336,10 +320,9 @@
                                         </svg>
                                     </span>
                                     <div class="moduleContent">
-                                        <div class="moduleSlide">
-                                            <img
-                                                src="https://cdn.jumpit.co.kr/lg/images/syyun_26773/20232607112656155_1080_790.webp"
-                                            />
+                                        <div class="moduleSlide" th:data-images="*{companyImageList.![companyImagePath]}">
+                                             <img src="">
+
                                         </div>
                                     </div>
                                 </div>
@@ -351,27 +334,7 @@
                         class="companyWelfare compSection"
                     >
                         <h2>복지 및 혜택</h2>
-                        <pre class="content">
-업무에만 집중할 수 있도록,
-• 최신 사양 업무 장비 지급
-• 시차 출퇴근제 운영 (7시~10시 사이 출근)
-• 개인 법인카드를 이용한 점심 지원 (일 12,000원)
-• 사내 카페 음료 지원
-• 부득이한 야근 시 택시비 지원
-• 무제한 간식 제공
-
-재직자의 건강과 리프레시를 위해,
-• 법적 연차 외 5일의 추가 연차 지급 (중도 입사자 일할 계산)
-• 주택 자금 대출 지원
-• 경조사 지원
-• 명절 상여/선물 지급
-• 사고나 질병에 대비한 단체 상해 보험 제공 (배우자, 자녀 포함)
-• 근속 3년 단위 보너스 & 특별 휴가 제공
-• 휴식을 위한 그룹사 연수원 및 기업 연계 휴양소 지원
-
-재직자의 성장을 위해,
-• 자기 개발을 위한 직무 도서 지원
-• 직무 교육 지원
+                        <pre class="content" th:text="*{companyWelfare}">
                         </pre>
                     </section>
                     <section
@@ -383,7 +346,7 @@
                         <span class="source">출처: 국민연금</span>
                         <div class="info">
                             <span>전체 직원수</span>
-                            <strong>226명</strong>
+                            <strong th:text="|*{companyEmployee}명|"></strong>
                         </div>
                         <div class="employeeGraph">
                             <div>
@@ -598,15 +561,14 @@
                         class="companyIngPosition compSection"
                     >
                         <h2>채용중인 포지션</h2>
-                        <em class="num">2</em>
+                        <em class="num" th:text="*{programCount}"></em>
                         <div class="positionWrapper">
                             <div class="currentPositions">
-                                <a href="" class="compPosition">
+                                <a href="" class="compPosition" th:each="programDTOList : ${programDTOList}">
                                     <label class="positionLeftDate">
-                                        <span class="dDayLeft">D-9</span>
+                                        <span class="dDayLeft" th:text="|D-${programDTOList.programEndDate}|"></span>
                                     </label>
-                                    <h3 class="positionIngTitle">
-                                        레진코믹스 안드로이드 개발자
+                                    <h3 class="positionIngTitle" th:text="${programDTOList.programName}">
                                     </h3>
                                     <ul class="skillCategory">
                                         <li class="positionSkill">Java</li>
@@ -652,41 +614,7 @@
                                         <!-- // 스크랩이 활성화됐을때 아이콘 -->
                                     </button>
                                 </a>
-                                <a href="" class="compPosition">
-                                    <label class="positionLeftDate">
-                                        <span class="dDayLeft">D-9</span>
-                                    </label>
-                                    <h3 class="positionIngTitle">
-                                        레진코믹스 백엔드 개발자
-                                    </h3>
-                                    <ul class="skillCategory">
-                                        <li class="positionSkill">Java</li>
-                                        <li class="positionSkill">· Spring</li>
-                                        <li class="positionSkill">· AWS</li>
-                                        <li class="positionSkill">· Kotlin</li>
-                                        <li class="positionSkill">· SQL</li>
-                                    </ul>
-                                    <button
-                                        aria-label="스크랩"
-                                        class="positionScrap"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            class="default"
-                                        >
-                                            <path
-                                                fill="#222"
-                                                fill-rule="evenodd"
-                                                d="M10.725 14.71a2 2 0 0 1 2.55 0l3.975 3.289V5H6.75v12.999l3.975-3.29ZM4.75 20.123V5a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v15.124a1 1 0 0 1-1.638.77L12 16.25l-5.612 4.645a1 1 0 0 1-1.638-.77Z"
-                                                clip-rule="evenodd"
-                                            ></path>
-                                        </svg>
-                                    </button>
-                                </a>
+
                             </div>
                         </div>
                     </section>
@@ -751,4 +679,5 @@
     </body>
     <script src="/js/main/company-info.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </html>

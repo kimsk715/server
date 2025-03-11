@@ -2,6 +2,7 @@ package com.app.temp.service;
 
 import com.app.temp.domain.dto.*;
 import com.app.temp.domain.vo.ScrapVO;
+import com.app.temp.repository.CompanyImageDAO;
 import com.app.temp.repository.MemberDAO;
 import com.app.temp.repository.ProgramDAO;
 import com.app.temp.repository.ScrapDAO;
@@ -21,10 +22,17 @@ public class ProgramService {
     private final ProgramDAO programDAO;
     private final MemberDAO memberDAO;
     private final ScrapDAO scrapDAO;
+    private final CompanyImageDAO companyImageDAO;
+    private final Pagination pagination;
+
 
     //    프로그램 목록 조회(관리자)
-    public ArrayList<ProgramListDTO> getAll(){
-        return programDAO.findAll();
+    public AdminProgramListDTO getAllProgram(Pagination pagination) {
+        AdminProgramListDTO adminProgramListDTO = new AdminProgramListDTO();
+        pagination.create(programDAO.countAll(pagination));
+        adminProgramListDTO.setPagination(pagination);
+        adminProgramListDTO.setPrograms(programDAO.findAll(pagination));
+        return adminProgramListDTO;
     }
 //  프로그램 목록 조회(메인페이지) + 스크랩 버튼 초기 상태 구분
 //  스크랩 버튼의 aria-pressed 속성을 true or false 로 저장해서 화면에서 보여줌.
@@ -49,7 +57,25 @@ public class ProgramService {
     }
 // 특정 프로그램의 정보 조회(메인 페이지)
     public Optional<MainProgramInfoDTO> getMainProgramInfoDTOById(Long id){
-            return programDAO.findMainProgramInfoDTOById(id);
+            Optional<MainProgramInfoDTO> programInfo = programDAO.findMainProgramInfoDTOById(id);
+            programInfo.ifPresent(mainProgramInfoDTO -> mainProgramInfoDTO.setCompanyImageList(companyImageDAO.findImageByCompanyId(id)));
+            programInfo.ifPresent(mainProgramInfoDTO -> mainProgramInfoDTO.setImageCount(companyImageDAO.imageCount(id)));
+        return programInfo;
+    }
+
+    public ArrayList<CompanyProgramDTO> getAllProgramByCompanyId(Long companyId){
+        ArrayList<CompanyProgramDTO> companyProgramDTOS = programDAO.findAllProgramByCompanyId(companyId);
+        companyProgramDTOS.forEach(companyProgramDTO -> {
+
+            if(companyProgramDTO.getProgramEndDate().equals("0") || companyProgramDTO.getProgramEndDate().contains("-")) {
+                companyProgramDTO.setProgramEndDate("day");
+            }
+        });
+        return programDAO.findAllProgramByCompanyId(companyId);
+    }
+
+    public int countByCompanyId(Long companyId){
+        return programDAO.countByCompanyId(companyId);
     }
 }
 

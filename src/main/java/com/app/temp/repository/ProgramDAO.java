@@ -15,8 +15,8 @@ public class ProgramDAO {
     private final ApplyMapper applyMapper;
 
     // 조회(전체)
-    public ArrayList<ProgramListDTO> findAll() {
-        return applyMapper.selectAll();
+    public ArrayList<ProgramListDTO> findAll(Pagination pagination) {
+        return applyMapper.selectAll(pagination);
     }
 
     // 특정 회원의 지원 현황 목록 조회
@@ -50,5 +50,13 @@ public class ProgramDAO {
     public Optional<MainProgramInfoDTO> findMainProgramInfoDTOById(Long id) {
         return applyMapper.selectMainProgramInfoDTOById(id);
     }
-
+// 회사별 프로그램 건수 확인
+    public int countByCompanyId(Long companyId) {
+        return applyMapper.countByCompanyId(companyId);
+    }
+//  전체 프로그램 개수
+    public int countAll(Pagination pagination) {
+        return applyMapper.countAll(pagination);
+    }
 }
+

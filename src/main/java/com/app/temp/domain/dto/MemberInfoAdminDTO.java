@@ -18,7 +18,6 @@ public class MemberInfoAdminDTO {
     private Long id;
     private String memberName;
     private String memberEmail;
-    private String memberRegisterDate;
     private String memberStatus; // 활성/비활성
     private String memberRecentLogin;
     private String memberPhone;
@@ -32,7 +31,6 @@ public class MemberInfoAdminDTO {
         memberVO.setId(id);
         memberVO.setMemberName(memberName);
         memberVO.setMemberEmail(memberEmail);
-        memberVO.setMemberRegisterDate(memberRegisterDate);
         memberVO.setMemberStatus(memberStatus);
         memberVO.setMemberRecentLogin(memberRecentLogin);
         memberVO.setMemberPhone(memberPhone);

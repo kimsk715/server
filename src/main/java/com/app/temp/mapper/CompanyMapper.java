@@ -12,6 +12,6 @@ public interface CompanyMapper {
     public void insert(CompanyVO companyVO);
 //    사업자등록번호 중복검사
     public Optional<CompanyDTO> selectByCompanyBusinessNumber(String companyBusinessNumber);
-//    기업회원 id로 기업정보 조회
+//    기업 id로 기업정보 조회
     public Optional<CompanyDTO> selectById(Long id);
 }

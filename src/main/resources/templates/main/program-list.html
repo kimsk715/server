@@ -10,9 +10,12 @@
             type="image/x-icon"
         />
         <link rel="stylesheet" href="/css/main/program-list.css" />
+        <link rel="stylesheet" href="/css/main/header.css">
+        <link rel="stylesheet" href="/css/main/account-common.css">
     </head>
     <body>
         <!-- 헤더 시작 -->
+        <header th:replace="/main/header.html :: .header-sc"></header>
         <!-- // 헤더 끝 -->
         <!-- 메인 시작 -->
         <main class="main">
@@ -204,9 +207,13 @@
                 <!-- // 체험 탐색 카테고리 끝 -->
                 <!-- 메인 컨텐츠 목록 시작 -->
                 <div class="mainContentsWrapper">
+                    <div class="filter-wrap">
+                        <div>최신 순 • &nbsp;</div>
+                        <div>인기 순</div>
+                    </div>
                     <div class="mainContentsList">
 
-                            <div class="mainContentCard" th:each="mainProgramListDTO : ${mainProgramListDTOS}">
+                        <div class="mainContentCard" th:each="mainProgramListDTO : ${mainProgramListDTOS}">
                                 <a th:href="|/program/detail/${mainProgramListDTO.id}|">
                                 <div class="imgBox">
                                     <img
@@ -3232,4 +3239,5 @@
         <!-- // 푸터 끝 -->
     </body>
     <script src="/js/main/program-list.js"></script>
+    <script src="/js/main/program-detail.js"></script>
 </html>

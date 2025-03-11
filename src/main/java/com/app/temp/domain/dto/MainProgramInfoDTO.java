@@ -22,6 +22,7 @@ public class MainProgramInfoDTO {
     private int duration;
     private int year;
     private int month;
+    private String companyUrl;
     private String categoryCname;
     private String programEndDate;
     private String programDetail;
@@ -36,6 +37,7 @@ public class MainProgramInfoDTO {
     private String companyWelfare;
     private String companyCulture;
     private List<CompanyImageDTO> companyImageList;
+    private int imageCount; // 회사 이미지 개수
 
     public ProgramVO toProgramVO() {
         ProgramVO programVO = new ProgramVO();

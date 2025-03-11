@@ -2,19 +2,17 @@ package com.app.temp.domain.dto;
 
 import lombok.*;
 import org.springframework.stereotype.Component;
-
+// 프로그램 상세보기에서 지원하기 버튼 눌렀을 때 보낼 정보들.
 @Component
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-// 개인 회원 목록(관리자 페이지)
-public class MemberAdminListDTO {
+public class ApplyDTO {
     @EqualsAndHashCode.Include
     private Long id;
-    private String memberName;
-    private String memberEmail;
-    private String memberStatus; // 활성/비활성
-    private String memberRecentLogin;
+    private Long memberId;
+    private Long resumeId;
+    private Long programId;
 }
