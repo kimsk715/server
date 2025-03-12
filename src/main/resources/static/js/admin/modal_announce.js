@@ -1,7 +1,7 @@
 // 공고관리 모달 동작 제어 JS
 // *핵심*: 기본정보 표시, *카테고리별 콘텐츠 표시*, *이미지 슬라이더*, 처리상태 변경
 
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
     // 공통 모달 제어 함수 정의 영역
     // ----------------------------------------------------
 
@@ -78,10 +78,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 필수 DOM 요소 존재 검증
     // 모달 동작에 핵심적인 요소들이 존재하지 않으면 초기화 중단
-    if (!announceModal || !announceDetailBtns) {
-        console.error("공고관리 모달 초기화 실패: 필수 DOM 요소 누락");
-        return;
-    }
+    // if (!announceModal || !announceDetailBtns) {
+    //     console.error("공고관리 모달 초기화 실패: 필수 DOM 요소 누락");
+    //     return;
+    // }
 
     // 유틸리티 함수 정의 영역
     // ----------------------------------------------------
@@ -121,16 +121,32 @@ document.addEventListener("DOMContentLoaded", function () {
     // 이벤트 리스너 설정 함수
     // 모든 사용자 인터랙션에 대한 이벤트 핸들러를 등록
     // ----------------------------------------------------
+
     function initializeEventListeners() {
         try {
             // 상세보기 버튼 클릭 이벤트 설정
-            announceDetailBtns.forEach((btn) => {
-                btn.addEventListener("click", () => {
+
+            // announceDetailBtns.forEach((btn) => {
+            //     btn.addEventListener("click", () => {
+            //         openModal(announceModal);
+            //         resetAnnounceModal();
+            //         console.log("공고 상세정보 조회 시작");
+            //     });
+            // });
+
+            document.addEventListener("click", (event) => {
+                const target = event.target;
+
+                // 클릭한 요소가 'detail-btn' 클래스를 가진 버튼인지 확인
+                if (target.classList.contains("detail-btn")) {
                     openModal(announceModal);
                     resetAnnounceModal();
+                    console.log(target.value);
                     console.log("공고 상세정보 조회 시작");
-                });
+                }
             });
+
+
 
             // 닫기(X) 버튼 이벤트 설정
             if (announceCloseBtn) {
@@ -205,6 +221,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
+
     // ESC 키 이벤트 핸들러 설정
     // 모달이 열린 상태에서 ESC 키 입력시 모달 닫기
     document.addEventListener("keydown", (e) => {
@@ -219,4 +237,5 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("공고관리 모달 초기화 시작");
     initializeEventListeners(); // 이벤트 리스너 설정 실행
     console.log("공고관리 모달 초기화 완료: 모든 기능 정상 작동 준비");
-});
+// });
+

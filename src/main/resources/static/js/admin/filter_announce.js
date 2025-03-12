@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // DOM 요소 참조 영역
   // ----------------------------------------------------
-  programService.
+
   // 공고관리 필터 요소 선택
   const announceStatusFilter = document.querySelector(
     ".announce-status-filter"
@@ -93,138 +93,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// service.js
-
-const programService= (() => {
-
-  const getAllProgram = async(callback, param ={}) =>{
-    let page = param.page || 1;
-    let search = param.search;
-    let keyword = "";
-    let status = "";
-    let date = 0;
-    if(search){
-      keyword = search.keyword;
-      status = search.status
-      date = search.date
-    }
-    let path =`/admin/home/program?page=${page}`;
-    if(status){
-      path += `&status=${status}`
-    }
-    if(date){
-      path += `&date=${date}`
-    }
-    if(keyword){
-      path += `&keyword=${keyword}`
-    }
-    const response = await fetch(path)
-    const programListData = await response.json();
-    if(callback){
-      callback(programListData)
-    }
-  }
-  return {getAllProgram: getAllProgram}
-})();
 
 
-// layout.js
-const programLayout = (() =>{
-  const showList = async (programListData) =>{
-    const tbody = document.querySelector(".announce-table tbody");
-    const pageWrap = document.querySelector(".announce-pagination");
-    const pagination = programListData.pagination;
-    let text = ``;
-    programListData.programs.forEach((program) => {
-      text += `<tr>
-                  <td>${program.id}</td>
-                  <td>${program.companyName}</td>
-                  <td>${program.programName}</td>
-                  <td>${program.createdDate}</td>
-                  <td>${program.programEndDate}</td>
-                  <td>
-                      <span class="status approved">${program.programStatus}</span>
-                  </td>
-                  <td>
-                      <button type="button" class="detail-btn">상세보기</button>
-                  </td>
-             </tr>`;
-    })
-    tbody.innerHTHL = text;
-
-    text=``;
-
-    if(pagination.prev) {
-      text += `<button type="button" class="page-btn" id="${pagination.startPage - 1}">이전</button>`
-    }
-    for(let i = pagination.startPage; i<=pagination.endPage + 1; i++){
-      if(pagination.page === i){
-        text += `<button type="button" class="page-btn active" id="${i}">${i}</button>`
-        continue;
-      }
-      text += `<button type="button" class="page-btn" id="${i}">${i}</button>`
-    }
-    if(pagination.next){
-      text += `<button type="button" class="page-btn" id="${pagination.endPage + 1}">다음</button>`
-    }
-    pageWrap.innerHTML =text;
-  }
-  return {showList : showList}
-})();
-
-// event.js
-const pageWrap = document.querySelector(".announce-pagination");
-const statusCategories = document.querySelectorAll(".announce-status-filter option");
-const dateCategories = document.querySelectorAll("announce-date-filter option")
-const keywordInput = document.querySelector(".search-box input[name=keyword]");
-
-programService.getAllProgram(programLayout.showList);
-
-pageWrap.addEventListener('click',(e) =>{
-    if(e.target.className.includes("page-btn")){
-      programService.getAllProgram(programLayout.showList, {page:e.target.id});
-    }
-})
-
-statusCategories.forEach((status) => {
-    status.addEventListener('click',(e) =>{
-      const dateType  = dateCategories.querySelector("option[selected]");
-      const statusType = statusCategories.querySelector("option[selected]");
-      const param = {search : {date : dateType, status : statusType}}
-      const keyword = keywordInput.value;
-      if(keyword){
-        param.search.keyword = keyword;
-      }
-      programService.getAllProgram(programLayout.showList,param);
-    })
-})
 
 
-dateCategories.forEach((date) =>{
-  date.addEventListener('click',(e) =>{
-    // e.preventDefault();
-    const dateType  = dateCategories.querySelector("option[selected]");
-    const statusType = statusCategories.querySelector("option[selected]");
-    const param = {search : {date : dateType, status : statusType}}
-    const keyword = keywordInput.value;
-    if(keyword){
-      param.search.keyword = keyword;
-    }
-    programService.getAllProgram(programLayout.showList,param);
-  })
-})
 
-keywordInput.addEventListener("keyup",(e)=>{
-  if(e.key === 'Enter'){
-    const keyword = e.target.value;
-    if(keyword){
-      const dateType  = dateCategories.querySelector("option[selected]");
-      const statusType = statusCategories.querySelector("option[selected]");
-      const param = {search : {date : dateType, status : statusType, keyword : keyword}}
-      programService.getAllProgram(programLayout.showList, param)
-    }
-  }
-})
+
 
 
 

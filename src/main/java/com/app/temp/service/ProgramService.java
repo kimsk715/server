@@ -30,6 +30,8 @@ public class ProgramService {
     public AdminProgramListDTO getAllProgram(Pagination pagination) {
         AdminProgramListDTO adminProgramListDTO = new AdminProgramListDTO();
         pagination.create(programDAO.countAll(pagination));
+        log.info("Program count: " + programDAO.countAll(pagination));
+        log.info(pagination.toString());
         adminProgramListDTO.setPagination(pagination);
         adminProgramListDTO.setPrograms(programDAO.findAll(pagination));
         return adminProgramListDTO;
@@ -77,5 +79,15 @@ public class ProgramService {
     public int countByCompanyId(Long companyId){
         return programDAO.countByCompanyId(companyId);
     }
+
+    public Optional<ProgramInfoDTO> getProgramInfoDTOById(Long id){
+        return programDAO.findProgramInfoDTOById(id);
+    }
+
+    public ArrayList<ProgramInfoDTO> getAllProgramInfoDTO(){
+        return programDAO.findAllProgramInfoDTO();
+    }
+
+
 }
 

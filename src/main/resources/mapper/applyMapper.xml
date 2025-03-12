@@ -28,7 +28,7 @@
         WHERE COMPANY_ID = #{companyId}
     </select>
     <select id="selectAll" resultType="programListDTO">
-        SELECT ID, COMPANY_NAME, PROGRAM_NAME, CREATED_DATE, PROGRAM_END_DATE, PROGRAM_STATUS
+        SELECT ID, COMPANY_NAME, PROGRAM_NAME, TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE , TO_CHAR(PROGRAM_END_DATE, 'YYYY-MM-DD') AS PROGRAM_END_DATE, PROGRAM_STATUS
                FROM
         (
         SELECT ID, ROWNUM R, COMPANY_NAME, PROGRAM_NAME, CREATED_DATE, PROGRAM_END_DATE, PROGRAM_STATUS
@@ -38,14 +38,14 @@
         FROM TBL_PROGRAM P
         JOIN TBL_COMPANY C
         ON P.COMPANY_ID = C.ID
-        <if test="status != null">
+        <if test="status != 'all' and status != null">
             AND P.PROGRAM_STATUS = #{status}
         </if>
         <if test="keyword != null">
             AND PROGRAM_NAME LIKE '%' || #{keyword} || '%'
         </if>
-        <if test="date != null">
-            AND CEIL(TO_DATE(PROGRAM_END_DATE)-SYSDATE) <![CDATA[ <= #{date} ]]>
+        <if test="date != 0">
+            AND CEIL(SYSDATE - TO_DATE(P.CREATED_DATE)) <![CDATA[ <= #{date}]]>
         </if>
         ORDER BY P.ID DESC
         )
@@ -64,6 +64,13 @@
                  JOIN TBL_COMPANY C
                       ON P.COMPANY_ID = C.ID
         WHERE P.ID = #{id}
+    </select>
+<!-- 공고 상세보기 -->
+    <select id="selectAllProgramInfoDTO" resultType="ProgramInfoDTO">
+            SELECT P.ID, C.COMPANY_NAME, P.PROGRAM_NAME, TO_CHAR(P.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE, TO_CHAR(P.PROGRAM_END_DATE, 'YYYY-MM-DD') AS PROGRAM_END_DATE, P.PROGRAM_STATUS, P.PROGRAM_DETAIL, P.PROGRAM_PRICE, P.PROGRAM_BENEFIT, P.PROGRAM_THUMBNAIL_PATH
+        FROM TBL_PROGRAM P
+                 JOIN TBL_COMPANY C
+                      ON P.COMPANY_ID = C.ID
     </select>
 
     <update id="update">
@@ -113,6 +120,5 @@
     <select id="countAll" resultType="_int">
         SELECT COUNT(*)
         FROM TBL_PROGRAM
-
     </select>
 </mapper>

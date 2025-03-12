@@ -106,8 +106,9 @@
                                         <div class="submenu-container">
                                             <a
                                                 class="submenu-item announce-link"
-                                                href="/admin/home/program/"
-                                                >공고목록</a
+                                                href="/admin/home/programs"
+                                                data-category="program"
+                                                ><button onclick=""></button>공고목록</a
                                             >
                                         </div>
                                     </div>
@@ -135,11 +136,13 @@
                                             <a
                                                 class="submenu-item normal-member-link"
                                                 href="#"
+                                                data-category="member"
                                                 >일반회원</a
                                             >
                                             <a
                                                 class="submenu-item company-member-link"
                                                 href="#"
+                                                data-category="companymember"
                                                 >기업회원</a
                                             >
                                         </div>
@@ -168,11 +171,13 @@
                                             <a
                                                 class="submenu-item personal-inquiry-link"
                                                 href="#"
+                                                data-category="memberinquiry"
                                                 >개인문의</a
                                             >
                                             <a
                                                 class="submenu-item company-inquiry-link"
                                                 href="#"
+                                                data-category="companyinquiry"
                                                 >기업문의</a
                                             >
                                         </div>
@@ -201,6 +206,7 @@
                                             <a
                                                 class="submenu-item report-link"
                                                 href="#"
+                                                data-category="report"
                                                 >신고목록</a
                                             >
                                         </div>
@@ -404,7 +410,7 @@
                         </main>
 
                         <!-- 공고관리 컨텐츠 -->
-                        <div class="announce-management" style="display: block">
+                        <div class="announce-management" id="program" style="display: block">
                             <!-- 상단 검색/필터 영역 -->
                             <div
                                 class="announce-search-filter-container announce-filter"
@@ -428,19 +434,19 @@
                                         class="status-filter announce-status-filter"
                                     >
                                         <option value="all">전체</option>
-                                        <option value="pending">심사중</option>
-                                        <option value="hold">보류</option>
-                                        <option value="approved">승인</option>
-                                        <option value="rejected">반려</option>
+                                        <option value="심사중">심사중</option>
+                                        <option value="보류">보류</option>
+                                        <option value="승인">승인</option>
+                                        <option value="반려">반려</option>
                                     </select>
                                     <select
                                         class="date-filter announce-date-filter"
                                     >
-                                        <option value="week">최근 1주일</option>
-                                        <option value="month">
+                                        <option value="7">최근 1주일</option>
+                                        <option value="30">
                                             최근 1개월
                                         </option>
-                                        <option value="three-month">
+                                        <option value="90">
                                             최근 3개월
                                         </option>
                                     </select>
@@ -461,80 +467,8 @@
                                             <th>관리</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>0000001</td>
-                                            <td>템프</td>
-                                            <td>실무자 원데이 체험 프로그램</td>
-                                            <td>2025-02-07</td>
-                                            <td>2025-02-28</td>
-                                            <td>
-                                                <span class="status pending"
-                                                    >심사중</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>0000002</td>
-                                            <td>코리아IT</td>
-                                            <td>백엔드 개발자 ONE-WEEK 체험</td>
-                                            <td>2025-02-07</td>
-                                            <td>2025-04-13</td>
-                                            <td>
-                                                <span class="status hold"
-                                                    >보류</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>0000003</td>
-                                            <td>점핏</td>
-                                            <td>웹 퍼블리셔 일일 체험</td>
-                                            <td>2025-02-06</td>
-                                            <td>2025-06-07</td>
-                                            <td>
-                                                <span class="status approved">승인</span>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="detail-btn">상세보기</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>0000004</td>
-                                            <td>삼성</td>
-                                            <td>프론트엔드 개발자 체험</td>
-                                            <td>2025-02-06</td>
-                                            <td>2025-03-13</td>
-                                            <td>
-                                                <span class="status rejected"
-                                                    >반려</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
+                                    <tbody id="programList">
+<!--                                    공고 목록 들어가야할 공간-->
                                     </tbody>
                                 </table>
                             </div>
@@ -1733,28 +1667,29 @@
                 <!-- 모달 본문 -->
                 <div class="modal-body">
                     <!-- 공고 기본 정보 -->
+
                     <div class="announce-info">
                         <h4>INFO</h4>
-                        <table class="info-table">
+                        <table class="info-table"th:object="${buttonValue}" th:each="program, iterStat : ${programList}" th:if="${iterStat.index == buttonValue}">
                             <tbody>
                                 <tr>
                                     <th>공고 제목</th>
-                                    <td colspan="3" id="announce-title">
-                                        실무자 원데이 체험 프로그램
+                                    <td colspan="3" id="announce-title" th:text="${program.programName}">
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>공고번호</th>
-                                    <td id="announce-id">0000001</td>
+                                    <td id="announce-id" th:text="${program.id}"></td>
                                     <th>기업명</th>
-                                    <td id="company-name">템프</td>
+                                    <td id="company-name" th:text="${program.companyName}"></td>
                                 </tr>
 
                                 <tr>
                                     <th>등록일</th>
-                                    <td id="register-date">2025-02-07</td>
+                                    <td id="register-date" th:text="${program.createdDate}"></td>
                                     <th>마감일</th>
-                                    <td id="deadline-date">2025-02-28</td>
+                                    <td id="deadline-date" th:text="${program.programEndDate}"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2375,5 +2310,9 @@
         <script src="/js/admin/modal_company_certificate.js"></script>
         <script src="/js/admin/modal_normal_inquiry.js"></script>
         <script src="/js/admin/modal_company_inquiry.js"></script>
+        <script src="/js/admin/program_service.js"></script>
+        <script src="/js/admin/program_layout.js"></script>
+        <script src="/js/admin/program_event.js"></script>
+
     </body>
 </html>

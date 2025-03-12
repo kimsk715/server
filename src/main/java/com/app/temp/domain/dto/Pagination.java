@@ -24,7 +24,7 @@ public class Pagination {
 
     private String order;
     private String keyword;
-    private String date; // 최근 1주일, 1개월, 3개월 필터
+    private int date; // 최근 1주일, 1개월, 3개월 필터
     private String status; // 처리 상태
 
     public void create(int total) {

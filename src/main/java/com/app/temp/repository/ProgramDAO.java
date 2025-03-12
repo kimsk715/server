@@ -58,5 +58,9 @@ public class ProgramDAO {
     public int countAll(Pagination pagination) {
         return applyMapper.countAll(pagination);
     }
+
+    public ArrayList<ProgramInfoDTO> findAllProgramInfoDTO() {
+        return applyMapper.selectAllProgramInfoDTO();
+    }
 }
 

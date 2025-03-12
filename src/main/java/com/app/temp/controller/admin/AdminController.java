@@ -2,6 +2,8 @@ package com.app.temp.controller.admin;
 
 import com.app.temp.domain.dto.AdminProgramListDTO;
 import com.app.temp.domain.dto.Pagination;
+import com.app.temp.domain.dto.ProgramInfoDTO;
+import com.app.temp.domain.dto.ProgramListDTO;
 import com.app.temp.domain.vo.AdminVO;
 import com.app.temp.service.AdminService;
 import com.app.temp.service.ProgramService;
@@ -9,28 +11,34 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/*")
 @Slf4j
 @RequiredArgsConstructor
 public class AdminController {
     private final HttpSession session;
     private final AdminService adminService;
     private final ProgramService programService;
+    private final ProgramListDTO programListDTO;
 
-    @GetMapping("home")
-        public void home() {
+
+    @GetMapping("admin/home")
+        public void home(Model model) {
+        ArrayList<ProgramInfoDTO> programList = programService.getAllProgramInfoDTO();
+        Long buttonValue = 0L;
+        model.addAttribute("buttonValue", buttonValue);
+        model.addAttribute("programList", programList);
     }
 
-    @PostMapping("home")
+    @PostMapping("admin/home")
     public String adminLogin(String adminId, String adminPassword, RedirectAttributes redirectAttributes) {
         Optional<AdminVO> admin = adminService.login(adminId, adminPassword);
 
@@ -45,11 +53,17 @@ public class AdminController {
         return "redirect:/admin/home"; // 관리자 홈으로 리디렉트
     }
 
-    @GetMapping("home/program")
+
+
+
+    @GetMapping("/admin/home/programs")
     @ResponseBody
     public AdminProgramListDTO getProgramList(Pagination pagination) {
         return programService.getAllProgram(pagination);
     }
+
+
+
 
 
 }

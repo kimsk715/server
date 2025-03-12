@@ -31,5 +31,5 @@ public interface ApplyMapper {
 
     public int countAll(Pagination pagination);
 
-
+    public ArrayList<ProgramInfoDTO> selectAllProgramInfoDTO();
 }
