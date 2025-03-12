@@ -1,14 +1,14 @@
-const pageWrap = document.querySelector(".announce-pagination");
-const statusCategories = document.querySelector(".announce-status-filter");
-const dateCategories = document.querySelector(".announce-date-filter")
-const keywordInput = document.querySelector(".search-box input[name=keyword]");
+const pageWrap = document.querySelector(".normal-member-pagination");
+const statusCategories = document.querySelector(".member-status-filter");
+const dateCategories = document.querySelector(".member-date-filter")
+const keywordInput = document.querySelector("div.member-filter div.search-box input[name=keyword]");
 
-programService.getAllProgram(programLayout.showList);
+memberService.getAllMember(memberLayout.showList);
 
 
 pageWrap.addEventListener('click',(e) =>{
     if(e.target.className.includes("page-btn")){
-        programService.getAllProgram(programLayout.showList, {page:e.target.id});
+        programService.getAllMember(memberLayout.showList, {page:e.target.id});
     }
 })
 
@@ -21,7 +21,7 @@ statusCategories.addEventListener('click',(e) =>{
         if(keyword){
             param.search.keyword = keyword;
         }
-        programService.getAllProgram(programLayout.showList,param);
+        programService.getAllMember(memberLayout.showList,param);
     })
 
 
@@ -35,7 +35,7 @@ dateCategories.addEventListener('click',(e) =>{
         if(keyword){
             param.search.keyword = keyword;
         }
-        programService.getAllProgram(programLayout.showList,param);
+        programService.getAllMember(memberLayout.showList,param);
     })
 
 
@@ -46,7 +46,7 @@ keywordInput.addEventListener("keyup",(e)=>{
             const dateType  = dateCategories.value;
             const statusType = statusCategories.value;
             const param = {search : {date : dateType, status : statusType, keyword : keyword}}
-            programService.getAllProgram(programLayout.showList, param);
+            programService.getAllMember(memberLayout.showList, param);
         }
     }
 })

@@ -1,11 +1,9 @@
 package com.app.temp.controller.admin;
 
-import com.app.temp.domain.dto.AdminProgramListDTO;
-import com.app.temp.domain.dto.Pagination;
-import com.app.temp.domain.dto.ProgramInfoDTO;
-import com.app.temp.domain.dto.ProgramListDTO;
+import com.app.temp.domain.dto.*;
 import com.app.temp.domain.vo.AdminVO;
 import com.app.temp.service.AdminService;
+import com.app.temp.service.MemberService;
 import com.app.temp.service.ProgramService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -27,15 +24,11 @@ public class AdminController {
     private final HttpSession session;
     private final AdminService adminService;
     private final ProgramService programService;
-    private final ProgramListDTO programListDTO;
+    private final MemberService memberService;
 
 
     @GetMapping("admin/home")
         public void home(Model model) {
-        ArrayList<ProgramInfoDTO> programList = programService.getAllProgramInfoDTO();
-        Long buttonValue = 0L;
-        model.addAttribute("buttonValue", buttonValue);
-        model.addAttribute("programList", programList);
     }
 
     @PostMapping("admin/home")
@@ -53,15 +46,30 @@ public class AdminController {
         return "redirect:/admin/home"; // 관리자 홈으로 리디렉트
     }
 
-
+//    Long programId = (Long) pagination.getProgramId();
+//        if(programId != null){
+//        Optional<ProgramInfoDTO> programInfoDTO = programService.getProgramInfoDTOById(programId);
+//            log.info(programInfoDTO.toString());
+//            log.info(programId.toString());
+//        model.addAttribute("program", programInfoDTO);
+//        model.addAttribute("programID", programId);
+//    }
 
 
     @GetMapping("/admin/home/programs")
     @ResponseBody
-    public AdminProgramListDTO getProgramList(Pagination pagination) {
+    public AdminProgramListDTO getProgramList(Pagination pagination, Model model) {
+
         return programService.getAllProgram(pagination);
     }
 
+    @GetMapping("/admin/home/members")
+    @ResponseBody
+    public AdminMemberListDTO getMemberList(Pagination pagination, Model model) {
+        log.info(pagination.toString());
+
+        return memberService.getAllAdmin(pagination);
+    }
 
 
 

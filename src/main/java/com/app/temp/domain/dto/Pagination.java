@@ -26,7 +26,8 @@ public class Pagination {
     private String keyword;
     private int date; // 최근 1주일, 1개월, 3개월 필터
     private String status; // 처리 상태
-
+    private Long programId; // 상세 보기 용
+    private Long memberId; // 개인 회원 상세 보기용
     public void create(int total) {
         this.rowCount = 10;
         this.pageCount = 10;

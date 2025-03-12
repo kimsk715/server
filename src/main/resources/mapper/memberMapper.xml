@@ -37,8 +37,32 @@
         FROM TBL_MEMBER WHERE ID = #{id}
     </select>
     <select id="selectAllAdmin" resultType="memberAdminListDTO">
-        SELECT ID, MEMBER_NAME, MEMBER_EMAIL,  MEMBER_RECENT_LOGIN, MEMBER_STATUS
+        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE , TO_CHAR(MEMBER_RECENT_LOGIN, 'YYYY-MM-DD') AS MEMBER_RECENT_LOGIN, MEMBER_STATUS
+        FROM (
+        SELECT ID, ROWNUM R, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS
+        FROM
+        (
+        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS
         FROM TBL_MEMBER
+
+        <if test="status != 'all' and status != null">
+          WHERE MEMBER_STATUS = #{status}
+        </if>
+        <if test="keyword != null">
+            AND MEMBER_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="date != 0">
+            AND CEIL(SYSDATE - TO_DATE(MEMBER_RECENT_LOGIN)) <![CDATA[ <= #{date}]]>
+        </if>
+        ORDER BY ID DESC
+        )
+        <![CDATA[
+        WHERE ROWNUM <= ${endRow}
+        ]]>
+        )
+        <![CDATA[
+        WHERE R >= ${startRow}
+        ]]>
     </select>
 
 
@@ -54,4 +78,8 @@
         WHERE ID = #{id}
     </update>
 
+    <select id="countAll" resultType="_int">
+        SELECT COUNT(*)
+        FROM TBL_MEMBER
+    </select>
 </mapper>

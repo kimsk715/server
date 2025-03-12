@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
     // 모달 열기: display 처리 및 배경 스크롤 방지
     function openModal(modal) {
         modal.style.display = "block";
@@ -175,4 +174,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 초기화 실행
     initializeEventListeners();
-});
+

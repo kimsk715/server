@@ -1,6 +1,8 @@
 package com.app.temp.service;
 
+import com.app.temp.domain.dto.AdminMemberListDTO;
 import com.app.temp.domain.dto.MemberDTO;
+import com.app.temp.domain.dto.Pagination;
 import com.app.temp.repository.MemberDAO;
 import com.app.temp.repository.ResumeDAO;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ import java.util.Optional;
 public class MemberService {
     private final MemberDAO memberDAO;
     private final ResumeDAO resumeDAO;
-
+    private final Pagination pagination;
 //    회원가입
     public void join(MemberDTO memberDTO){
         memberDAO.save(memberDTO.toVO());
@@ -37,5 +39,13 @@ public class MemberService {
     // 로그인하면 회원 최근 로그인 시간 갱신
     public void updateMemberRecentLogin(Long id){
         memberDAO.updateMemberRecentLogin(id);
+    }
+
+    public AdminMemberListDTO getAllAdmin(Pagination pagination){
+        AdminMemberListDTO memberAdminList = new AdminMemberListDTO();
+        pagination.create(memberDAO.countAll(pagination));
+        memberAdminList.setPagination(pagination);
+        memberAdminList.setMemberList(memberDAO.findAllAdmin(pagination));
+        return memberAdminList;
     }
 }

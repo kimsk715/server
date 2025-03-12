@@ -1,12 +1,15 @@
 package com.app.temp.repository;
 
+import com.app.temp.domain.dto.MemberAdminListDTO;
 import com.app.temp.domain.dto.MemberDTO;
 import com.app.temp.domain.dto.MemberInfoAdminDTO;
+import com.app.temp.domain.dto.Pagination;
 import com.app.temp.domain.vo.MemberVO;
 import com.app.temp.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -40,5 +43,13 @@ public class MemberDAO {
 //  아이디로 회원 정보 조회
     public MemberInfoAdminDTO findMemberInfoAdmin(Long id) {
         return memberMapper.selectMemberInfoAdmin(id);
+    }
+
+    public List<MemberAdminListDTO> findAllAdmin(Pagination pagination){
+        return memberMapper.selectAllAdmin(pagination);
+    }
+
+    public int countAll(Pagination pagination){
+        return memberMapper.countAll();
     }
 }

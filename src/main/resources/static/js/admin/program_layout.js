@@ -1,6 +1,6 @@
 const programLayout = (() =>{
     const showList = async (programListData) =>{
-        const tbody = document.querySelector(".announce-table tbody");
+        const tbodyProgram = document.querySelector(".announce-table tbody");
         const pageWrap = document.querySelector(".announce-pagination");
         const pagination = programListData.pagination;
         let text = ``;
@@ -21,7 +21,7 @@ const programLayout = (() =>{
              </tr>
                `;
         })
-        tbody.innerHTML = text;
+        tbodyProgram.innerHTML = text;
 
         text=``;
 

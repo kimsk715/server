@@ -1,12 +1,12 @@
-const programService= (() => {
-    const programLink = document.querySelector(".announce-link")
-    programLink.addEventListener("click", async (e) => {
+const memberService= (() => {
+    const memberLink = document.querySelector(".normal-member-link")
+    memberLink.addEventListener("click", async (e) => {
         if (e.target.classList.contains("detail-btn")) {
-            let programId = e.target.value;  // 버튼의 value 속성에서 programId 가져옴
-            console.log("클릭한 프로그램 ID:", programId);
+            let memberId = e.target.value;  // 버튼의 value 속성에서 programId 가져옴
+            console.log("클릭한 프로그램 ID:", memberId);
 
             // programId를 포함한 API 요청
-            let path = `/admin/home/programs?programId=${programId}`;
+            let path = `/admin/home/members?memberId=${memberId}`;
 
             try {
                 const response = await fetch(path, {
@@ -32,7 +32,7 @@ const programService= (() => {
 
 
 
-    const getAllProgram = async(callback, param ={}) =>{
+    const getAllMember = async(callback, param ={}) =>{
         let page = param.page || 1;
         let search = param.search;
         let keyword = "";
@@ -43,21 +43,21 @@ const programService= (() => {
             status = search.status;
             date = search.date;
         }
-        let path =`/admin/home/programs?page=${page}`;
+        let memberPath =`/admin/home/members?page=${page}`;
         if(status){
-            path += `&status=${status}`
+            memberPath += `&status=${status}`
         }
         if(date){
-            path += `&date=${date}`
+            memberPath += `&date=${date}`
         }
         if(keyword){
-            path += `&keyword=${keyword}`
+            memberPath += `&keyword=${keyword}`
         }
-        const response = await fetch(path)
-        const programListData = await response.json();
+        const response = await fetch(memberPath)
+        const memberListData = await response.json();
         if(callback){
-            callback(programListData)
+            callback(memberListData)
         }
     }
-    return {getAllProgram: getAllProgram};
+    return {getAllMember: getAllMember};
 })();

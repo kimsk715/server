@@ -135,7 +135,7 @@
                                         <div class="submenu-container">
                                             <a
                                                 class="submenu-item normal-member-link"
-                                                href="#"
+                                                href="/admin/home/members"
                                                 data-category="member"
                                                 >일반회원</a
                                             >
@@ -563,86 +563,7 @@
                                     </thead>
                                     <tbody>
                                         <!-- 샘플 데이터 -->
-                                        <tr>
-                                            <td>0000001</td>
-                                            <td>허세웅</td>
-                                            <td>woongzzang@gmail.com</td>
-                                            <td>2025-01-15</td>
-                                            <td>2025-02-10</td>
-                                            <td>
-                                                <span class="status active"
-                                                    >활성</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>0000002</td>
-                                            <td>김동완</td>
-                                            <td>dongwan@naver.com</td>
-                                            <td>2024-08-20</td>
-                                            <td>2024-11-15</td>
-                                            <td>
-                                                <span class="status dormant"
-                                                    >휴면</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>0000003</td>
-                                            <td>김승균</td>
-                                            <td>victory95@gmail.com</td>
-                                            <td>2024-12-01</td>
-                                            <td>2025-02-09</td>
-                                            <td>
-                                                <span class="status suspended"
-                                                    >정지</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>0000004</td>
-                                            <td>한지수</td>
-                                            <td>jisoohan@daum.net</td>
-                                            <td>2024-09-05</td>
-                                            <td>2025-01-20</td>
-                                            <td>
-                                                <span class="status withdrawn"
-                                                    >탈퇴</span
-                                                >
-                                            </td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    class="detail-btn"
-                                                >
-                                                    상세보기
-                                                </button>
-                                            </td>
-                                        </tr>
+
                                         <!-- 추가 샘플 데이터들... -->
                                     </tbody>
                                 </table>
@@ -702,20 +623,20 @@
                                         class="status-filter member-status-filter"
                                     >
                                         <option value="all">전체</option>
-                                        <option value="active">활성</option>
-                                        <option value="dormant">휴면</option>
-                                        <option value="suspended">정지</option>
-                                        <option value="withdrawn">탈퇴</option>
+                                        <option value="활성">활성</option>
+                                        <option value="휴면">휴면</option>
+                                        <option value="정지">정지</option>
+                                        <option value="탈퇴">탈퇴</option>
                                     </select>
                                     <!-- 가입기간 필터 -->
                                     <select
                                         class="date-filter member-date-filter"
                                     >
-                                        <option value="week">최근 1주일</option>
-                                        <option value="month">
+                                        <option value="7">최근 1주일</option>
+                                        <option value="30">
                                             최근 1개월
                                         </option>
-                                        <option value="three-month">
+                                        <option value="90">
                                             최근 3개월
                                         </option>
                                     </select>
@@ -1667,32 +1588,30 @@
                 <!-- 모달 본문 -->
                 <div class="modal-body">
                     <!-- 공고 기본 정보 -->
-
-                    <div class="announce-info">
+                    <div class="announce-info" >
                         <h4>INFO</h4>
-                        <table class="info-table"th:object="${buttonValue}" th:each="program, iterStat : ${programList}" th:if="${iterStat.index == buttonValue}">
+                        <table class="info-table">
                             <tbody>
-                                <tr>
-                                    <th>공고 제목</th>
-                                    <td colspan="3" id="announce-title" th:text="${program.programName}">
+                            <tr>
+                                <th>공고 제목</th>
+                                <td colspan="3" id="announce-title"></td>
+                            </tr>
+                            <tr>
+                                <th>공고번호</th>
+                                <td id="announce-id"></td>
+                                <th>기업명</th>
+                                <td id="company-name"></td>
+                            </tr>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>공고번호</th>
-                                    <td id="announce-id" th:text="${program.id}"></td>
-                                    <th>기업명</th>
-                                    <td id="company-name" th:text="${program.companyName}"></td>
-                                </tr>
-
-                                <tr>
-                                    <th>등록일</th>
-                                    <td id="register-date" th:text="${program.createdDate}"></td>
-                                    <th>마감일</th>
-                                    <td id="deadline-date" th:text="${program.programEndDate}"></td>
-                                </tr>
+                            <tr>
+                                <th>등록일</th>
+                                <td id="register-date"></td>
+                                <th>마감일</th>
+                                <td id="deadline-date"></td>
+                            </tr>
                             </tbody>
                         </table>
+
                     </div>
 
                     <!-- 공고 상세내용 -->
@@ -2313,6 +2232,12 @@
         <script src="/js/admin/program_service.js"></script>
         <script src="/js/admin/program_layout.js"></script>
         <script src="/js/admin/program_event.js"></script>
+        <script src="/js/admin/member_service.js"></script>
+        <script src="/js/admin/member_layout.js"></script>
+        <script src="/js/admin/member_event.js"></script>
 
     </body>
+<script>
+
+</script>
 </html>
