@@ -1,12 +1,11 @@
-const memberService= (() => {
-    // const memberLink = document.querySelector(".normal-member-link")
+const companyInquiryService= (() => {
     document.addEventListener("click", async (e) => {
         if (e.target.classList.contains("detail-btn")) {
-            let memberId = e.target.value;  // 버튼의 value 속성에서 programId 가져옴
-            console.log("클릭한 프로그램 ID:", memberId);
+            let companyInquiryId = e.target.value;  // 버튼의 value 속성에서 programId 가져옴
+
 
             // programId를 포함한 API 요청
-            let path = `/admin/home/members?memberId=${memberId}`;
+            let path = `/admin/home/company-inquiries?companyInquiryId=${companyInquiryId}`;
 
             try {
                 const response = await fetch(path, {
@@ -32,34 +31,32 @@ const memberService= (() => {
 
 
 
-    const getAllMember = async(callback, param ={}) =>{
+    const getAllCompanyInquiry = async(callback, param ={}) =>{
         let page = param.page || 1;
         let search = param.search;
-        let memberKeyword = "";
+        let companyInquiryKeyword = "";
         let status = "";
         let date = 0;
         if(search){
-            memberKeyword = search.memberKeyword;
+            companyInquiryKeyword = search.companyInquiryKeyword;
             status = search.status;
             date = search.date;
         }
-        let memberPath =`/admin/home/members?page=${page}`;
+        let path =`/admin/home/company-inquiries?page=${page}`;
         if(status){
-            memberPath += `&status=${status}`
+            path += `&status=${status}`
         }
         if(date){
-            memberPath += `&date=${date}`
+            path += `&date=${date}`
         }
-        if(memberKeyword){
-            memberPath += `&memberKeyword=${memberKeyword}`
+        if(companyInquiryKeyword){
+            path += `&companyInquiryKeyword=${companyInquiryKeyword}`
         }
-        const response = await fetch(memberPath)
-        // console.log(response);
-        const memberListData = await response.json();
-        // console.log(memberListData)
+        const response = await fetch(path)
+        const companyInquiryListData = await response.json();
         if(callback){
-            callback(memberListData)
+            callback(companyInquiryListData)
         }
     }
-    return {getAllMember: getAllMember};
+    return {getAllCompanyInquiry: getAllCompanyInquiry};
 })();

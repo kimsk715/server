@@ -18,6 +18,7 @@ public class CompanyInquiryListDTO {
     private String companyName;
     private String createdDate;
     private String companyInquiryStatus;
+    private String companyInquiryDetail;
 
 
 }

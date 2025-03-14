@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Getter @Setter @ToString
 @NoArgsConstructor
 @Slf4j
-public class Pagination {
+public class MemberPagination {
     private int page;
     private int pageCount;
     private int startPage;
@@ -21,19 +21,18 @@ public class Pagination {
     private int endRow;
     private int realEnd;
     private boolean prev, next;
-    private int check;
-    private String order;
-    private String keyword;
+
+
+    private String memberKeyword;
     private int date; // 최근 1주일, 1개월, 3개월 필터
     private String status; // 처리 상태
-    private Long programId; // 상세 보기용 id
+    private Long memberId; // 개인 회원 상세 보기용
 
     public void create(int total) {
         this.rowCount = 10;
         this.pageCount = 10;
-        check = total;
-        this.page = page == 0 ? 1 : page;
 
+        this.page = page == 0 ? 1 : page;
         this.endPage = (int)(Math.ceil(this.page / (double)pageCount)) * pageCount;
         this.startPage = endPage - (pageCount - 1);
         this.realEnd = (int)Math.ceil(total / (double)rowCount);

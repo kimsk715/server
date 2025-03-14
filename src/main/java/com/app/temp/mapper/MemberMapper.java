@@ -3,7 +3,7 @@ package com.app.temp.mapper;
 import com.app.temp.domain.dto.MemberAdminListDTO;
 import com.app.temp.domain.dto.MemberDTO;
 import com.app.temp.domain.dto.MemberInfoAdminDTO;
-import com.app.temp.domain.dto.Pagination;
+import com.app.temp.domain.dto.MemberPagination;
 import com.app.temp.domain.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -29,12 +29,13 @@ public interface MemberMapper {
     //    회원 최근 로그인시간 갱신
     public void updateMemberRecentLogin(Long id);
 //  관리자 페이지에서 개인회원 목록 조회
-    public List<MemberAdminListDTO> selectAllAdmin(Pagination pagination);
+    public List<MemberAdminListDTO> selectAllAdmin(MemberPagination memberpagination);
 //  관리자 페이지에서 개인 회원 상세보기(ID로 조회)
-    public MemberInfoAdminDTO selectMemberInfoAdmin(Long id);
+    public Optional<MemberInfoAdminDTO> selectMemberInfoAdmin(Long id);
 //  관리자 페이지에서 회원 상태 변경(활성, 휴면, 정지 등...)
     public void update(MemberVO memberVO);
 
-    public int countAll();
+//    pagination 의 total 을 계산하기 위한 카운트
+    public int countAll(MemberPagination memberpagination);
 
 }

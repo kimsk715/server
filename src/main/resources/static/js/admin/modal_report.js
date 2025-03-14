@@ -13,21 +13,21 @@
 // TypeError
 // ReferenceError
 // SyntaxError
-
+function openModal(modal) {
+  console.log("신고관리 모달 열기 시도:", modal);
+  if (modal) {
+    modal.style.display = "block"; // 모달 표시
+    document.body.style.overflow = "hidden"; // 배경 스크롤 방지
+    console.log("신고관리 모달 열기 성공");
+  }
+}
 document.addEventListener("DOMContentLoaded", function () {
   // 공통 모달 제어 함수 정의 영역
   // ----------------------------------------------------
 
   // 모달 열기와 동시에 배경 스크롤 방지
   // 모달창 오픈시 화면 지터링을 방지하기 위한 스크롤 제어 포함
-  function openModal(modal) {
-    console.log("신고관리 모달 열기 시도:", modal);
-    if (modal) {
-      modal.style.display = "block"; // 모달 표시
-      document.body.style.overflow = "hidden"; // 배경 스크롤 방지
-      console.log("신고관리 모달 열기 성공");
-    }
-  }
+
 
   // 모달 닫기와 동시에 배경 스크롤 복원
   // 모달 닫을 때 원래 스크롤 상태로 복구하여 자연스러운 화면 전환 제공

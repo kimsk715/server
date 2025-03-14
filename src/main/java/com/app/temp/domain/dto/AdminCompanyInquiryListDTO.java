@@ -1,4 +1,5 @@
 package com.app.temp.domain.dto;
+// 기업 회원 전체 목록 조회 + 페이지네이션
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AdminMemberListDTO {
-    private MemberPagination memberPagination;
-    private List<MemberAdminListDTO> memberList;
+public class AdminCompanyInquiryListDTO {
+    private CompanyInquiryPagination companyInquiryPagination;
+    private List<CompanyInquiryListDTO> companyInquiryList;
 }

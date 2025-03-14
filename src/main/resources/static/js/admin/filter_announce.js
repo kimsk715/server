@@ -49,22 +49,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // ----------------------------------------------------
 
   // 상태 필터 변경 이벤트
-  announceStatusFilter.addEventListener("change", function () {
-    const selectedStatus = this.value;
-    // 선택된 상태값에 따른 한글 상태 매핑
-    console.log(
-      "공고관리 상태값:",
-      selectedStatus === "pending"
-        ? "심사중"
-        : selectedStatus === "hold"
-        ? "보류"
-        : selectedStatus === "approved"
-        ? "승인"
-        : selectedStatus === "rejected"
-        ? "반려"
-        : "전체"
-    );
-  });
+  // announceStatusFilter.addEventListener("change", function () {
+  //   const selectedStatus = this.value;
+  //   // 선택된 상태값에 따른 한글 상태 매핑
+  //   console.log(
+  //     "공고관리 상태값:",
+  //     selectedStatus === "pending"
+  //       ? "심사중"
+  //       : selectedStatus === "hold"
+  //       ? "보류"
+  //       : selectedStatus === "approved"
+  //       ? "승인"
+  //       : selectedStatus === "rejected"
+  //       ? "반려"
+  //       : "전체"
+  //   );
+  // });
 
   // 기간 필터 변경 이벤트
   announceDateFilter.addEventListener("change", function () {

@@ -1,6 +1,7 @@
 const programService= (() => {
-    const programLink = document.querySelector(".announce-link")
-    programLink.addEventListener("click", async (e) => {
+
+    // const programLink = document.querySelector(".announce-link")
+    document.addEventListener("click", async (e) => {
         if (e.target.classList.contains("detail-btn")) {
             let programId = e.target.value;  // 버튼의 value 속성에서 programId 가져옴
             console.log("클릭한 프로그램 ID:", programId);
@@ -54,7 +55,9 @@ const programService= (() => {
             path += `&keyword=${keyword}`
         }
         const response = await fetch(path)
+        console.log(response);
         const programListData = await response.json();
+        console.log(programListData)
         if(callback){
             callback(programListData)
         }

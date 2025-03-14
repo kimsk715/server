@@ -38,13 +38,14 @@
         FROM TBL_PROGRAM P
         JOIN TBL_COMPANY C
         ON P.COMPANY_ID = C.ID
+
         <if test="status != 'all' and status != null">
             AND P.PROGRAM_STATUS = #{status}
         </if>
         <if test="keyword != null">
             AND PROGRAM_NAME LIKE '%' || #{keyword} || '%'
         </if>
-        <if test="date != 0">
+        <if test="date != 0 and date != 1">
             AND CEIL(SYSDATE - TO_DATE(P.CREATED_DATE)) <![CDATA[ <= #{date}]]>
         </if>
         ORDER BY P.ID DESC
@@ -118,7 +119,25 @@
         </insert>
 
     <select id="countAll" resultType="_int">
-        SELECT COUNT(*)
-        FROM TBL_PROGRAM
+        SELECT COUNT(*) AS TOTAL
+        FROM
+            (
+        SELECT P.ID, COMPANY_NAME, PROGRAM_NAME, P.CREATED_DATE, PROGRAM_END_DATE, P.PROGRAM_STATUS
+        FROM TBL_PROGRAM P
+        JOIN TBL_COMPANY C
+        ON P.COMPANY_ID = C.ID
+
+        <if test="status != 'all' and status != null">
+            AND P.PROGRAM_STATUS = #{status}
+        </if>
+        <if test="keyword != null">
+            AND PROGRAM_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="date != 0 and date != 1">
+            AND CEIL(SYSDATE - TO_DATE(P.CREATED_DATE)) <![CDATA[ <= #{date}]]>
+        </if>
+
+        )
+
     </select>
 </mapper>

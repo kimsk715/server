@@ -14,4 +14,7 @@ public interface CompanyMapper {
     public Optional<CompanyDTO> selectByCompanyBusinessNumber(String companyBusinessNumber);
 //    기업 id로 기업정보 조회
     public Optional<CompanyDTO> selectById(Long id);
-}
+
+
+
+    }

@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class CompanyMemberInfoAdminDTO {
     @EqualsAndHashCode.Include
     private Long id;
-    private String companyAddress;
+    private String companyMainAddress;
     private Long companyId;
-    private int companyBusinessNumber;
+    private Long companyBusinessNumber;
     private int year; // ~~~~년 출력용
     private int month; // ~~월 출력용
     private String companyEstablishment;
@@ -31,10 +31,10 @@ public class CompanyMemberInfoAdminDTO {
     private String companyCulture;
     private String companyName;
     private String companyCEO;
-    private String companyCategory;
+    private String categoryCName;
     private String memberName;
     private String memberEmail;
-    private String memberRegisterDate;
+    private String createdDate;
     private String memberRecentLogin;
     private String memberStatus;
     private String memberPhone;
@@ -48,7 +48,6 @@ public class CompanyMemberInfoAdminDTO {
         memberVO.setId(id);
         memberVO.setMemberName(memberName);
         memberVO.setMemberEmail(memberEmail);
-        memberVO.setMemberRegisterDate(memberRegisterDate);
         memberVO.setMemberRecentLogin(memberRecentLogin);
         memberVO.setMemberStatus(memberStatus);
         memberVO.setMemberPhone(memberPhone);

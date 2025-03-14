@@ -28,30 +28,30 @@
         WHERE ID = #{id}
     </update>
     <select id="selectByMemberEmail" resultType="memberDTO">
-        SELECT ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, TO_CHAR(MEMBER_BIRTH, 'YYYY') MEMBER_BIRTH ,MEMBER_PROFILE_PATH, MEMBER_CLASS, MEMBER_POINT, MEMBER_STATUS, CREATED_DATE, UPDATED_DATE
+        SELECT ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, TO_CHAR(MEMBER_BIRTH, 'YYYY') AS MEMBER_BIRTH ,MEMBER_PROFILE_PATH, MEMBER_CLASS, MEMBER_POINT, MEMBER_STATUS, CREATED_DATE, UPDATED_DATE
         FROM TBL_MEMBER
         WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
     <select id="selectByMemberId" resultType="memberDTO">
-        SELECT ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL,  MEMBER_PROFILE_PATH, MEMBER_CLASS, MEMBER_POINT, MEMBER_STATUS, CREATED_DATE, UPDATED_DATE
-        FROM TBL_MEMBER WHERE ID = #{id}
+        SELECT ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL,  MEMBER_PROFILE_PATH, MEMBER_CLASS, MEMBER_POINT, MEMBER_STATUS, CREATED_DATE, UPDATED_DATE        FROM TBL_MEMBER WHERE ID = #{id}
     </select>
+    <!-- 관리자용 -->
     <select id="selectAllAdmin" resultType="memberAdminListDTO">
-        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE , TO_CHAR(MEMBER_RECENT_LOGIN, 'YYYY-MM-DD') AS MEMBER_RECENT_LOGIN, MEMBER_STATUS
+        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE , TO_CHAR(MEMBER_RECENT_LOGIN, 'YYYY-MM-DD') AS MEMBER_RECENT_LOGIN, MEMBER_STATUS, MEMBER_PHONE
         FROM (
-        SELECT ID, ROWNUM R, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS
+        SELECT ID, ROWNUM R, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS, MEMBER_PHONE
         FROM
         (
-        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS
+        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS, MEMBER_PHONE
         FROM TBL_MEMBER
-
+        WHERE ID IS NOT NULL
         <if test="status != 'all' and status != null">
-          WHERE MEMBER_STATUS = #{status}
+           AND MEMBER_STATUS = #{status}
         </if>
-        <if test="keyword != null">
-            AND MEMBER_NAME LIKE '%' || #{keyword} || '%'
+        <if test="memberKeyword != null">
+            AND MEMBER_NAME LIKE '%' || #{memberKeyword} || '%'
         </if>
-        <if test="date != 0">
+        <if test="date != 0 and date != 1">
             AND CEIL(SYSDATE - TO_DATE(MEMBER_RECENT_LOGIN)) <![CDATA[ <= #{date}]]>
         </if>
         ORDER BY ID DESC
@@ -61,7 +61,7 @@
         ]]>
         )
         <![CDATA[
-        WHERE R >= ${startRow}
+        WHERE R <= ${endRow}
         ]]>
     </select>
 
@@ -80,6 +80,19 @@
 
     <select id="countAll" resultType="_int">
         SELECT COUNT(*)
+        FROM (
+        SELECT ID, MEMBER_NAME, MEMBER_EMAIL, CREATED_DATE, MEMBER_RECENT_LOGIN, MEMBER_STATUS
         FROM TBL_MEMBER
+        WHERE ID IS NOT NULL
+        <if test="status != 'all' and status != null">
+             AND MEMBER_STATUS = #{status}
+        </if>
+        <if test="memberKeyword != null">
+            AND MEMBER_NAME LIKE '%' || #{memberKeyword} || '%'
+        </if>
+        <if test="date != 0 and date != 1">
+            AND CEIL(SYSDATE - TO_DATE(MEMBER_RECENT_LOGIN)) <![CDATA[ <= #{date}]]>
+        </if>
+        )
     </select>
 </mapper>

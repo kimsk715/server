@@ -1,16 +1,15 @@
 package com.app.temp.service;
 
-import com.app.temp.domain.dto.AdminMemberListDTO;
-import com.app.temp.domain.dto.MemberDTO;
-import com.app.temp.domain.dto.Pagination;
+import com.app.temp.domain.dto.*;
 import com.app.temp.repository.MemberDAO;
 import com.app.temp.repository.ResumeDAO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
@@ -41,11 +40,16 @@ public class MemberService {
         memberDAO.updateMemberRecentLogin(id);
     }
 
-    public AdminMemberListDTO getAllAdmin(Pagination pagination){
+    public AdminMemberListDTO getAllAdmin(MemberPagination memberpagination){
         AdminMemberListDTO memberAdminList = new AdminMemberListDTO();
-        pagination.create(memberDAO.countAll(pagination));
-        memberAdminList.setPagination(pagination);
-        memberAdminList.setMemberList(memberDAO.findAllAdmin(pagination));
+        memberpagination.create(memberDAO.countAll(memberpagination));
+        log.info(String.valueOf(memberDAO.countAll(memberpagination)));
+        memberAdminList.setMemberPagination(memberpagination);
+        memberAdminList.setMemberList(memberDAO.findAllAdmin(memberpagination));
         return memberAdminList;
+    }
+
+    public Optional<MemberInfoAdminDTO> getMemberInfoAdmin(Long id){
+        return memberDAO.findMemberInfoAdmin(id);
     }
 }

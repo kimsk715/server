@@ -17,7 +17,7 @@ public class CompanyMemberAdminListDTO {
     private String companyBusinessNumber;
     private String memberName;
     private String memberEmail;
-    private String memberRegisterDate;
+    private String createdDate;
     private String memberRecentLogin;
     private String memberStatus;
 }

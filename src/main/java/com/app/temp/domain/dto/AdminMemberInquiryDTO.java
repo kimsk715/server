@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AdminMemberListDTO {
-    private MemberPagination memberPagination;
-    private List<MemberAdminListDTO> memberList;
+public class AdminMemberInquiryDTO {
+    private List<MemberInquiryDTO> memberInquiryList;
+    private MemberInquiryPagination memberInquiryPagination;
 }

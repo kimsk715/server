@@ -1,57 +1,67 @@
-const pageWrap = document.querySelector(".normal-member-pagination");
-const statusCategories = document.querySelector(".member-status-filter");
-const dateCategories = document.querySelector(".member-date-filter")
-const keywordInput = document.querySelector("div.member-filter div.search-box input[name=keyword]");
+const memberPageWrap = document.querySelector(".normal-member-pagination");
+const memberStatusCategories = document.querySelector(".member-status-filter");
+const memberDateCategories = document.querySelector(".member-date-filter")
+const memberKeywordInput = document.querySelector("div.normal-member-search-filter-container div.search-box input[name=memberKeyword]");
 
-memberService.getAllMember(memberLayout.showList);
+document.addEventListener('click', (e) =>{
+    if(e.target.classList.contains("normal-member-link")){
+        memberService.getAllMember(memberLayout.showList);
+    }
+})
 
 
-pageWrap.addEventListener('click',(e) =>{
+
+memberPageWrap.addEventListener('click',(e) =>{
     if(e.target.className.includes("page-btn")){
-        programService.getAllMember(memberLayout.showList, {page:e.target.id});
+        memberService.getAllMember(memberLayout.showList, {page:e.target.id});
+        console.log("개인회원 실행점 확인")
     }
 })
 
-statusCategories.addEventListener('click',(e) =>{
-        const dateType  = dateCategories.value;
-        const statusType = statusCategories.value;
-        const param = {search : {date : dateType, status : statusType}}
-        const keyword = keywordInput.value;
+memberStatusCategories.addEventListener('click',(e) =>{
+    console.log("개인회원 실행점 확인")
+    const dateType  = memberDateCategories.value;
+    const statusType = memberStatusCategories.value;
+    const param = {search : {date : dateType, status : statusType}}
+    const memberKeyword = memberKeywordInput.value;
 
-        if(keyword){
-            param.search.keyword = keyword;
+        if(memberKeyword){
+            param.search.memberKeyword = memberKeyword;
         }
-        programService.getAllMember(memberLayout.showList,param);
+    memberService.getAllMember(memberLayout.showList,param);
     })
 
 
-dateCategories.addEventListener('click',(e) =>{
-        // e.preventDefault();
-        const dateType  = dateCategories.value;
-        const statusType = statusCategories.value;
+memberDateCategories.addEventListener('click',(e) =>{
+    console.log("개인회원 실행점 확인")
+        const dateType  = memberDateCategories.value;
+        const statusType = memberStatusCategories.value;
         const param = {search : {date : dateType, status : statusType}}
-        const keyword = keywordInput.value;
+        const memberKeyword = memberKeywordInput.value;
 
-        if(keyword){
-            param.search.keyword = keyword;
+        if(memberKeyword){
+            param.search.memberKeyword = memberKeyword;
         }
-        programService.getAllMember(memberLayout.showList,param);
+    memberService.getAllMember(memberLayout.showList,param);
     })
 
 
-keywordInput.addEventListener("keyup",(e)=>{
+memberKeywordInput.addEventListener("keyup",(e)=>{
+    console.log("개인회원 실행점 확인")
     if(e.key === 'Enter'){
-        const keyword = e.target.value;
-        if(keyword){
-            const dateType  = dateCategories.value;
-            const statusType = statusCategories.value;
-            const param = {search : {date : dateType, status : statusType, keyword : keyword}}
-            programService.getAllMember(memberLayout.showList, param);
+        console.log(e.target.value)
+        const memberKeyword = e.target.value;
+
+        if(memberKeyword){
+            const dateType  = memberDateCategories.value;
+            const statusType = memberStatusCategories.value;
+            const param = {search : {date : dateType, status : statusType, memberKeyword : memberKeyword}}
+            memberService.getAllMember(memberLayout.showList, param);
         }
     }
 })
-console.log(dateCategories.value)
-console.log(statusCategories.value)
+console.log(memberDateCategories.value)
+console.log(memberStatusCategories.value)
 
 
 

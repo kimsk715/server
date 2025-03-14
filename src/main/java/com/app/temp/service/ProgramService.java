@@ -29,9 +29,11 @@ public class ProgramService {
     //    프로그램 목록 조회(관리자)
     public AdminProgramListDTO getAllProgram(Pagination pagination) {
         AdminProgramListDTO adminProgramListDTO = new AdminProgramListDTO();
+        log.info(String.valueOf(programDAO.countAll(pagination)));
         pagination.create(programDAO.countAll(pagination));
-        log.info("Program count: " + programDAO.countAll(pagination));
-        log.info(pagination.toString());
+
+//        log.info("Program count: " + programDAO.countAll(pagination));
+//        log.info(pagination.toString());
         adminProgramListDTO.setPagination(pagination);
         adminProgramListDTO.setPrograms(programDAO.findAll(pagination));
         return adminProgramListDTO;

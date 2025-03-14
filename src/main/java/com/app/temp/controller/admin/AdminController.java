@@ -2,9 +2,7 @@ package com.app.temp.controller.admin;
 
 import com.app.temp.domain.dto.*;
 import com.app.temp.domain.vo.AdminVO;
-import com.app.temp.service.AdminService;
-import com.app.temp.service.MemberService;
-import com.app.temp.service.ProgramService;
+import com.app.temp.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +23,8 @@ public class AdminController {
     private final AdminService adminService;
     private final ProgramService programService;
     private final MemberService memberService;
+    private final CompanyMemberService companyMemberService;
+    private final InquiryService inquiryService;
 
 
     @GetMapping("admin/home")
@@ -46,32 +46,35 @@ public class AdminController {
         return "redirect:/admin/home"; // 관리자 홈으로 리디렉트
     }
 
-//    Long programId = (Long) pagination.getProgramId();
-//        if(programId != null){
-//        Optional<ProgramInfoDTO> programInfoDTO = programService.getProgramInfoDTOById(programId);
-//            log.info(programInfoDTO.toString());
-//            log.info(programId.toString());
-//        model.addAttribute("program", programInfoDTO);
-//        model.addAttribute("programID", programId);
-//    }
 
-
-    @GetMapping("/admin/home/programs")
-    @ResponseBody
-    public AdminProgramListDTO getProgramList(Pagination pagination, Model model) {
-
-        return programService.getAllProgram(pagination);
-    }
 
     @GetMapping("/admin/home/members")
     @ResponseBody
-    public AdminMemberListDTO getMemberList(Pagination pagination, Model model) {
-        log.info(pagination.toString());
-
-        return memberService.getAllAdmin(pagination);
+    public AdminMemberListDTO getMemberList(MemberPagination memberpagination, Model model) {
+        return memberService.getAllAdmin(memberpagination);
     }
 
+    @GetMapping("/admin/home/programs")
+    @ResponseBody
+    public AdminProgramListDTO getProgramList(Pagination pagination, Model model, HttpSession session) {
+        return programService.getAllProgram(pagination);
+    }
 
+    @GetMapping("/admin/home/company-members")
+    @ResponseBody
+    public AdminCompanyMemberListDTO getCompanyMemberList(CompanyMemberPagination companyMemberPagination, Model model, HttpSession session) {
+        return companyMemberService.getAllAdmin(companyMemberPagination);
+    }
 
+    @GetMapping("/admin/home/member-inquiries")
+    @ResponseBody
+    public AdminMemberInquiryDTO getMemberInquiryList(MemberInquiryPagination memberInquiryPagination, Model model) {
+        return inquiryService.getAll(memberInquiryPagination);
+    }
 
+    @GetMapping("/admin/home/company-inquiries")
+    @ResponseBody
+    public AdminCompanyInquiryListDTO getCompanyInquiryList(CompanyInquiryPagination companyInquiryPagination, Model model) {
+        return inquiryService.getAllCompany(companyInquiryPagination);
+    }
 }

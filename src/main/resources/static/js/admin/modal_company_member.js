@@ -171,29 +171,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     loadMemberData(memberId);
                 });
             });
-
-            // 닫기 버튼 이벤트
-            if (companyCloseBtn) {
-                companyCloseBtn.addEventListener("click", () =>
+            document.addEventListener('click' ,(e)=>{
+                if (companyCloseBtn){
                     closeModal(companyMemberModal)
-                );
-            }
-
-            // 취소 버튼 이벤트
-            if (companyCancelBtn) {
-                companyCancelBtn.addEventListener("click", () =>
+                }
+                if (companyCancelBtn){
                     closeModal(companyMemberModal)
-                );
-            }
-
-            // 저장 버튼 이벤트
-            if (companySaveBtn) {
-                companySaveBtn.addEventListener("click", function () {
-                    // 추후 저장 로직 구현
-                    console.log("회원정보 저장");
+                }
+                if (companySaveBtn){
+                    closeModal(companyMemberModal)
+                }
+                if (e.target.classList.contains("modal-backdrop")) {
                     closeModal(companyMemberModal);
-                });
-            }
+                }
+            })
+
 
             // 상세정보 카테고리 변경 이벤트
             if (detailSelect) {
@@ -210,11 +202,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // 모달 외부 클릭시 닫기
-            companyMemberModal.addEventListener("click", function (e) {
-                if (e.target.classList.contains("modal-backdrop")) {
-                    closeModal(companyMemberModal);
-                }
-            });
 
             console.log("기업회원 모달 이벤트 리스너 초기화 완료");
         } catch (error) {

@@ -2,10 +2,7 @@ package com.app.temp.service;
 
 import com.app.temp.controller.exception.BusinessNumberAlreadyExistsException;
 import com.app.temp.controller.exception.MemberNotFoundException;
-import com.app.temp.domain.dto.CompanyDTO;
-import com.app.temp.domain.vo.CompanyVO;
-import com.app.temp.domain.dto.CompanyMemberDTO;
-import com.app.temp.domain.dto.MemberDTO;
+import com.app.temp.domain.dto.*;
 import com.app.temp.repository.CompanyDAO;
 import com.app.temp.repository.CompanyMemberDAO;
 import com.app.temp.repository.MemberDAO;
@@ -110,4 +107,16 @@ public class CompanyMemberService {
             log.info("company는 세션에 없습니다.");
         }
     }
+    // 관리자 페이지에서 기업 회원 목록 조회
+    public AdminCompanyMemberListDTO getAllAdmin(CompanyMemberPagination companyMemberPagination) {
+        AdminCompanyMemberListDTO adminCompanyMemberListDTO = new AdminCompanyMemberListDTO();
+        companyMemberPagination.create(companyMemberDAO.countAllCompanyMember(companyMemberPagination));
+        adminCompanyMemberListDTO.setCompanyMemberPagination(companyMemberPagination);
+        adminCompanyMemberListDTO.setCompanyMemberList(companyMemberDAO.findAllAdmin(companyMemberPagination));
+        return adminCompanyMemberListDTO;
+    }
+
+
+
+
 }

@@ -15,6 +15,7 @@ public class MemberAdminListDTO {
     private Long id;
     private String memberName;
     private String memberEmail;
+    private String memberPhone;
     private String memberStatus; // 활성/비활성
     private String memberRecentLogin;
     private String createdDate;

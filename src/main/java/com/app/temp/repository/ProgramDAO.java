@@ -4,6 +4,7 @@ import com.app.temp.domain.dto.*;
 import com.app.temp.domain.vo.ProgramVO;
 import com.app.temp.mapper.ApplyMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class ProgramDAO {
     private final ApplyMapper applyMapper;
 
@@ -56,6 +58,7 @@ public class ProgramDAO {
     }
 //  전체 프로그램 개수
     public int countAll(Pagination pagination) {
+//        log.info(String.valueOf(applyMapper.countAll(pagination)));
         return applyMapper.countAll(pagination);
     }
 

@@ -1,9 +1,15 @@
 const pageWrap = document.querySelector(".announce-pagination");
 const statusCategories = document.querySelector(".announce-status-filter");
 const dateCategories = document.querySelector(".announce-date-filter")
-const keywordInput = document.querySelector(".search-box input[name=keyword]");
+const keywordInput = document.querySelector("div.announce-filter div.search-box input[name=keyword]");
 
-programService.getAllProgram(programLayout.showList);
+document.addEventListener('click',(e)=>{
+    if(e.target.classList.contains("announce-link")){
+        programService.getAllProgram(programLayout.showList);
+    }
+
+})
+
 
 
 pageWrap.addEventListener('click',(e) =>{
@@ -50,8 +56,8 @@ keywordInput.addEventListener("keyup",(e)=>{
         }
     }
 })
-console.log(dateCategories.value)
-console.log(statusCategories.value)
+// console.log(dateCategories.value)
+// console.log(statusCategories.value)
 
 
 

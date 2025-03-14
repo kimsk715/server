@@ -79,45 +79,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log("문의 상세정보 조회 시작");
                 });
             });
-
-            // 닫기(X) 버튼 이벤트 설정
-            // 모달 우측 상단 X 버튼 클릭시 모달 닫기
-            if (inquiryCloseBtn) {
-                inquiryCloseBtn.addEventListener("click", () => {
+            document.addEventListener('click', (e)=>{
+                if (inquiryCloseBtn){
                     closeModal(inquiryModal);
-                    console.log("닫기 버튼으로 모달 닫기 처리");
-                });
-            }
-
-            // 취소 버튼 이벤트 설정
-            // 모달 하단 취소 버튼 클릭시 모달 닫기
-            if (inquiryCancelBtn) {
-                inquiryCancelBtn.addEventListener("click", () => {
+                }
+                if (inquiryCancelBtn){
                     closeModal(inquiryModal);
-                    console.log("취소 버튼으로 모달 닫기 처리");
-                });
-            }
-
-            // 저장 버튼 이벤트 설정
-            // 처리상태 변경 후 저장 버튼 클릭시 서버 저장 처리
-            if (inquirySaveBtn) {
-                inquirySaveBtn.addEventListener("click", () => {
-                    // 추후 구현: 변경된 처리상태를 서버에 저장하는 API 호출
-                    console.log("문의관리 처리상태 저장 시작");
+                }
+                if (inquirySaveBtn){
                     closeModal(inquiryModal);
-                });
-            }
-
-            // 모달 외부 영역 클릭 이벤트 설정
-            // backdrop(모달 뒷 배경) 클릭시 모달 닫기
-            inquiryModal.addEventListener("click", (e) => {
+                }
                 if (e.target.classList.contains("modal-backdrop")) {
                     closeModal(inquiryModal);
-                    console.log("배경 클릭으로 모달 닫기 처리");
                 }
-            });
+            })
 
-            console.log("문의관리 모달 이벤트 리스너 초기화 완료");
         } catch (error) {
             console.error(
                 "문의관리 모달 이벤트 리스너 설정 중 오류 발생:",

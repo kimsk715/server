@@ -1,7 +1,7 @@
 // 공고관리 모달 동작 제어 JS
 // *핵심*: 기본정보 표시, *카테고리별 콘텐츠 표시*, *이미지 슬라이더*, 처리상태 변경
 
-// document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     // 공통 모달 제어 함수 정의 영역
     // ----------------------------------------------------
 
@@ -32,6 +32,7 @@
 
     // 모달 기본 요소 참조 선택
     const announceModal = document.querySelector(".announce-modal"); // 공고관리 모달의 최상위 컨테이너
+    const announceTableWrapper = document.querySelector(".announce-management");
     const announceDetailBtns = document.querySelectorAll(
         ".announce-table .detail-btn"
     ); // 목록의 모든 상세보기 버튼
@@ -88,35 +89,35 @@
 
     // 모달 내용 초기화 함수
     // 모달이 열릴 때마다 모든 내용을 초기 상태로 리셋
-    function resetAnnounceModal() {
-        console.log("공고관리 모달 초기화 시작");
-        if (contentSelect) contentSelect.selectedIndex = 0; // 카테고리 선택 초기화
-        if (detailContent) detailContent.textContent = "카테고리를 선택하세요."; // 내용 영역 초기화
-        currentImageIndex = 0; // 이미지 인덱스 초기화
-        updateImage(); // 이미지 표시 업데이트
-        console.log("공고관리 모달 초기화 완료");
-    }
+    // function resetAnnounceModal() {
+    //     console.log("공고관리 모달 초기화 시작");
+    //     if (contentSelect) contentSelect.selectedIndex = 0; // 카테고리 선택 초기화
+    //     if (detailContent) detailContent.textContent = "카테고리를 선택하세요."; // 내용 영역 초기화
+    //     currentImageIndex = 0; // 이미지 인덱스 초기화
+    //     updateImage(); // 이미지 표시 업데이트
+    //     console.log("공고관리 모달 초기화 완료");
+    // }
 
     // 이미지 업데이트 함수
     // 이미지 변경 및 이전/다음 버튼 상태 업데이트
-    function updateImage() {
-        if (announceImage && images.length > 0) {
-            console.log("이미지 업데이트 시작:", currentImageIndex + 1);
-            announceImage.src = images[currentImageIndex];
-
-            // 이미지 로드 상태 모니터링
-            announceImage.onload = () =>
-                console.log("이미지 로드 완료:", currentImageIndex + 1);
-            announceImage.onerror = () =>
-                console.error("이미지 로드 실패:", images[currentImageIndex]);
-
-            // 이전/다음 버튼 활성화 상태 설정
-            prevImageBtn.disabled = currentImageIndex === 0;
-            nextImageBtn.disabled = currentImageIndex === images.length - 1;
-
-            console.log("이미지 업데이트 완료");
-        }
-    }
+    // function updateImage() {
+    //     if (announceImage && images.length > 0) {
+    //         console.log("이미지 업데이트 시작:", currentImageIndex + 1);
+    //         announceImage.src = images[currentImageIndex];
+    //
+    //         // 이미지 로드 상태 모니터링
+    //         announceImage.onload = () =>
+    //             console.log("이미지 로드 완료:", currentImageIndex + 1);
+    //         announceImage.onerror = () =>
+    //             console.error("이미지 로드 실패:", images[currentImageIndex]);
+    //
+    //         // 이전/다음 버튼 활성화 상태 설정
+    //         prevImageBtn.disabled = currentImageIndex === 0;
+    //         nextImageBtn.disabled = currentImageIndex === images.length - 1;
+    //
+    //         console.log("이미지 업데이트 완료");
+    //     }
+    // }
 
     // 이벤트 리스너 설정 함수
     // 모든 사용자 인터랙션에 대한 이벤트 핸들러를 등록
@@ -124,57 +125,38 @@
 
     function initializeEventListeners() {
         try {
-            // 상세보기 버튼 클릭 이벤트 설정
-
-            // announceDetailBtns.forEach((btn) => {
-            //     btn.addEventListener("click", () => {
-            //         openModal(announceModal);
-            //         resetAnnounceModal();
-            //         console.log("공고 상세정보 조회 시작");
-            //     });
-            // });
-
-            document.addEventListener("click", (event) => {
-                const target = event.target;
-
-                // 클릭한 요소가 'detail-btn' 클래스를 가진 버튼인지 확인
-                if (target.classList.contains("detail-btn")) {
-                    openModal(announceModal);
-                    resetAnnounceModal();
-                    console.log(target.value);
-                    console.log("공고 상세정보 조회 시작");
-                }
+            announceDetailBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                openModal(announceModal);
+                // 추후 구현: 클릭된 행의 문의 데이터를 서버에서 조회하여 모달에 표시
+                console.log("프로그램 상세정보 조회 시작");
+                });
             });
 
-
-
-            // 닫기(X) 버튼 이벤트 설정
-            if (announceCloseBtn) {
-                announceCloseBtn.addEventListener("click", () => {
+            document.addEventListener('click',(e)=>{
+                if (announceCloseBtn){
                     closeModal(announceModal);
-                    console.log("닫기 버튼으로 모달 닫기 처리");
-                });
-            }
-
-            // 취소 버튼 이벤트 설정
-            if (announceCancelBtn) {
-                announceCancelBtn.addEventListener("click", () => {
+                }
+                if (announceCancelBtn){
                     closeModal(announceModal);
-                    console.log("취소 버튼으로 모달 닫기 처리");
-                });
-            }
-
-            // 저장 버튼 이벤트 설정
-            if (announceSaveBtn) {
-                announceSaveBtn.addEventListener("click", () => {
-                    console.log("공고관리 처리상태 저장 시작");
+                }
+                if (announceSaveBtn){
                     closeModal(announceModal);
-                });
-            }
+                }
+                if (e.target.classList.contains("modal-backdrop")) {
+                    closeModal(announceModal);
+                    console.log("배경 클릭으로 모달 닫기 처리");
+                }
+
+            })
+
+
+
+
 
             // 카테고리 선택 변경 이벤트 설정
-            if (contentSelect && detailContent) {
-                contentSelect.addEventListener("change", function () {
+            if (contentSelect && detailContent){
+                document.addEventListener("change", function () {
                     const content = announceContents[this.value];
                     detailContent.textContent =
                         content || "카테고리를 선택하세요.";
@@ -183,36 +165,31 @@
             }
 
             // 이미지 이전 버튼 이벤트 설정
-            if (prevImageBtn) {
-                prevImageBtn.addEventListener("click", () => {
-                    if (currentImageIndex > 0) {
-                        currentImageIndex--;
-                        updateImage();
-                        console.log("이전 이미지로 이동");
-                    }
-                });
-            }
+            // if (prevImageBtn) {
+            //     document.addEventListener("click", () => {
+            //         if (currentImageIndex > 0) {
+            //             currentImageIndex--;
+            //             updateImage();
+            //             console.log("이전 이미지로 이동");
+            //         }
+            //     });
+            // }
 
             // 이미지 다음 버튼 이벤트 설정
-            if (nextImageBtn) {
-                nextImageBtn.addEventListener("click", () => {
-                    if (currentImageIndex < images.length - 1) {
-                        currentImageIndex++;
-                        updateImage();
-                        console.log("다음 이미지로 이동");
-                    }
-                });
-            }
+            // if (nextImageBtn) {
+            //     document.addEventListener("click", () => {
+            //         if (currentImageIndex < images.length - 1) {
+            //             currentImageIndex++;
+            //             updateImage();
+            //             console.log("다음 이미지로 이동");
+            //         }
+            //     });
+            // }
 
             // 모달 외부 영역 클릭 이벤트 설정
-            announceModal.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal-backdrop")) {
-                    closeModal(announceModal);
-                    console.log("배경 클릭으로 모달 닫기 처리");
-                }
-            });
 
-            console.log("공고관리 모달 이벤트 리스너 초기화 완료");
+
+
         } catch (error) {
             console.error(
                 "공고관리 모달 이벤트 리스너 설정 중 오류 발생:",
@@ -237,5 +214,5 @@
     console.log("공고관리 모달 초기화 시작");
     initializeEventListeners(); // 이벤트 리스너 설정 실행
     console.log("공고관리 모달 초기화 완료: 모든 기능 정상 작동 준비");
-// });
+});
 
